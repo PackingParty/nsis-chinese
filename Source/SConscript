@@ -1,64 +1,64 @@
-target = 'makensis'
+﻿target = 'makensis'
 
 pch = 'Platform.h'
 
 makensis_files = Split("""
-	build.cpp
-	clzma.cpp
-	crc32.c
-	DialogTemplate.cpp
-	dirreader.cpp
-	fileform.cpp
-	growbuf.cpp
-	icon.cpp
-	lang.cpp
-	lineparse.cpp
-	makenssi.cpp
-	manifest.cpp
-	mmap.cpp
-	Plugins.cpp
-	ResourceEditor.cpp
-	ResourceVersionInfo.cpp
-	script.cpp
-	ShConstants.cpp
-	strlist.cpp
-	tokens.cpp
-	tstring.cpp
-	util.cpp
-	validateunicode.cpp
-	winchar.cpp
-	writer.cpp
-	ttf.cpp
+    build.cpp
+    clzma.cpp
+    crc32.c
+    DialogTemplate.cpp
+    dirreader.cpp
+    fileform.cpp
+    growbuf.cpp
+    icon.cpp
+    lang.cpp
+    lineparse.cpp
+    makenssi.cpp
+    manifest.cpp
+    mmap.cpp
+    Plugins.cpp
+    ResourceEditor.cpp
+    ResourceVersionInfo.cpp
+    script.cpp
+    ShConstants.cpp
+    strlist.cpp
+    tokens.cpp
+    tstring.cpp
+    util.cpp
+    validateunicode.cpp
+    winchar.cpp
+    writer.cpp
+    ttf.cpp
 """)
 
 bzip2_files = Split("""
-	bzip2/blocksort.c
-	bzip2/bzlib.c
-	bzip2/compress.c
-	bzip2/huffman.c
+    bzip2/blocksort.c
+    bzip2/bzlib.c
+    bzip2/compress.c
+    bzip2/huffman.c
 """)
 
 lzma_files = Split("""
-	7zip/7zGuids.cpp
-	7zip/7zip/Common/OutBuffer.cpp
-	7zip/7zip/Common/StreamUtils.cpp
-	7zip/7zip/Compress/LZ/LZInWindow.cpp
-	7zip/7zip/Compress/LZMA/LZMAEncoder.cpp
-	7zip/7zip/Compress/RangeCoder/RangeCoderBit.cpp
-	7zip/Common/Alloc.cpp
-	7zip/Common/CRC.cpp
+    7zip/7zGuids.cpp
+    7zip/7zip/Common/OutBuffer.cpp
+    7zip/7zip/Common/StreamUtils.cpp
+    7zip/7zip/Compress/LZ/LZInWindow.cpp
+    7zip/7zip/Compress/LZMA/LZMAEncoder.cpp
+    7zip/7zip/Compress/RangeCoder/RangeCoderBit.cpp
+    7zip/Common/Alloc.cpp
+    7zip/Common/CRC.cpp
 """)
 
 zlib_files = Split("""
-	zlib/deflate.c
-	zlib/trees.c
+    zlib/deflate.c
+    zlib/trees.c
 """)
 
 libs = Split("""
-	gdi32
-	user32
-	pthread
-	iconv
+    gdi32
+    user32
+    pthread
+    iconv
 """)
 
 Import('env defenv AddAvailableLibs')
@@ -66,9 +66,9 @@ Import('env defenv AddAvailableLibs')
 ##### Use available libraries
 
 if env['PLATFORM'] == 'win32':
-	# XXX will cause problems if makensis is cross compiled
-	# on freebsd, libversion.a exists and gives trouble if linked
-	libs += ['version']
+    # XXX will cause problems if makensis is cross compiled
+    # on freebsd, libversion.a exists and gives trouble if linked
+    libs += ['version']
 
 AddAvailableLibs(env, libs)
 

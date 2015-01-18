@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2011 Nullsoft and Contributors
  * 
  * Licensed under the zlib/libpng license (the "License");

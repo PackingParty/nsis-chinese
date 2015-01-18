@@ -1,4 +1,4 @@
-/*
+﻿/*
  * BinTree.h
  * 
  * This file is a part of LZMA compression module for NSIS.

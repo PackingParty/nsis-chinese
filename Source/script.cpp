@@ -1,4 +1,4 @@
-/*
+﻿/*
  * script.cpp
  * 
  * This file is a part of NSIS.
@@ -72,7 +72,7 @@ CValidateUnicode::FILE_TYPE ValidateUnicodeLicenseText(TCHAR*& buffer, unsigned 
       // Remove the UTF_8 BOM
       memmove_s(ldata, datalen, ldata + 3, datalen - 3);
       datalen = datalen - 3;
-		ldata[datalen] = 0;
+        ldata[datalen] = 0;
     }
     else
     {
@@ -84,7 +84,7 @@ CValidateUnicode::FILE_TYPE ValidateUnicodeLicenseText(TCHAR*& buffer, unsigned 
     if (CValidateUnicode::ValidateUTF16LE(ldata, datalen))
     {
       // Remove the UTF_16LE BOM
-		// The lack of -1 in the last parameter ensures that the terminating '\0' also gets moved.
+        // The lack of -1 in the last parameter ensures that the terminating '\0' also gets moved.
       wmemmove_s((wchar_t*)ldata, datalen/sizeof(wchar_t), ((wchar_t*)ldata)+1, datalen/sizeof(wchar_t));
       datalen = datalen - sizeof(wchar_t);
     }
@@ -98,14 +98,14 @@ CValidateUnicode::FILE_TYPE ValidateUnicodeLicenseText(TCHAR*& buffer, unsigned 
     if (CValidateUnicode::ValidateUTF16BE(ldata, datalen))
     {
       // Remove the UTF_16BE BOM
-		// The lack of -1 in the last parameter ensures that the terminating '\0' also gets moved.
+        // The lack of -1 in the last parameter ensures that the terminating '\0' also gets moved.
       wmemmove_s((wchar_t*)ldata, datalen/sizeof(wchar_t), ((wchar_t*)ldata)+1, datalen/sizeof(wchar_t));
       datalen = datalen - sizeof(wchar_t);
-		// Loop through and flip the bytes.
-		for (unsigned int i = 0; i < datalen; i += 2)
-		{
-			std::swap(ldata[i], ldata[i+1]);
-		}
+        // Loop through and flip the bytes.
+        for (unsigned int i = 0; i < datalen; i += 2)
+        {
+            std::swap(ldata[i], ldata[i+1]);
+        }
     }
     else
     {
@@ -1728,7 +1728,7 @@ int CEXEBuild::doCommand(int which_token, LineParser &line)
 
         if (ftype != CValidateUnicode::UTF_8 &&
             ftype != CValidateUnicode::UTF_16LE &&
-				ftype != CValidateUnicode::UTF_16BE)
+                ftype != CValidateUnicode::UTF_16BE)
         {
           ERROR_MSG(_T("LicenseLangString: %d unsupported %s encoding found in \"%s\".\n"),
             lang, CValidateUnicode::TypeToName(ftype), file);
@@ -2073,7 +2073,7 @@ int CEXEBuild::doCommand(int which_token, LineParser &line)
 
             if (ftype != CValidateUnicode::UTF_8 &&
                 ftype != CValidateUnicode::UTF_16LE &&
-					 ftype != CValidateUnicode::UTF_16BE)
+                     ftype != CValidateUnicode::UTF_16BE)
             {
               ERROR_MSG(_T("LicenseData: unsupported %s encoding found in \"%s\".\n"),
                 CValidateUnicode::TypeToName(ftype), file);

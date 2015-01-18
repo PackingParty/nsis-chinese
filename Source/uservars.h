@@ -1,4 +1,4 @@
-/*
+﻿/*
  * uservars.h
  * 
  * This file is a part of NSIS.
@@ -31,20 +31,20 @@ struct uservarstring {
 class UserVarsStringList : public SortedStringListND<struct uservarstring>
 {
   public:
-	 /* Default constructor */
+     /* Default constructor */
     UserVarsStringList() : m_index(0) {}
 
-	 /* Destructor */
+     /* Destructor */
     virtual ~UserVarsStringList() {}
 
-	 /**
-	  * Adds a name to the UserVarsStringList.  Sets reference count to
-	  * ref_count.
-	  *
-	  * @param name The User variable string to store.
-	  * @param ref_count The reference count to store.  Default is 0.
-	  * @return The index of the added variable string.
-	  */
+     /**
+      * Adds a name to the UserVarsStringList.  Sets reference count to
+      * ref_count.
+      *
+      * @param name The User variable string to store.
+      * @param ref_count The reference count to store.  Default is 0.
+      * @return The index of the added variable string.
+      */
     int add(const TCHAR *name, int ref_count = 0 )
     {
       int pos=SortedStringListND<struct uservarstring>::add(name);
@@ -52,8 +52,8 @@ class UserVarsStringList : public SortedStringListND<struct uservarstring>
 
       uservarstring* ustr = ((uservarstring*) m_gr.get()) + pos;
 
-		ustr->reference = ref_count;
-		ustr->index     = m_index;
+        ustr->reference = ref_count;
+        ustr->index     = m_index;
       ustr->pos       = pos;
 
       int temp = m_index;
@@ -62,15 +62,15 @@ class UserVarsStringList : public SortedStringListND<struct uservarstring>
       return temp;
     }
 
-	 /**
-	  * Get the index of the string that matches 'name.'
-	  *
-	  * @param name The name of the string to search for.
-	  * @param n_chars If -1, match entire string, otherwise compare only
-	  * n_chars worth of characters.
-	  * @return The index position of the structure where structure.name ==
-	  * name.
-	  */
+     /**
+      * Get the index of the string that matches 'name.'
+      *
+      * @param name The name of the string to search for.
+      * @param n_chars If -1, match entire string, otherwise compare only
+      * n_chars worth of characters.
+      * @return The index position of the structure where structure.name ==
+      * name.
+      */
     int get(const TCHAR *name, int n_chars = -1)
     {
       int v = SortedStringListND<struct uservarstring>::find(name, n_chars);
@@ -78,22 +78,22 @@ class UserVarsStringList : public SortedStringListND<struct uservarstring>
       return (((struct uservarstring*) m_gr.get())[v].index);
     }
 
-	 /**
-	  * Get count of strings.
-	  *
-	  * @return The count of strings.
-	  */
+     /**
+      * Get count of strings.
+      *
+      * @return The count of strings.
+      */
     int getnum()
     {
        return m_index;
     }
 
-	 /**
-	  * Given the index of the structure, return the reference count.
-	  *
-	  * @return The reference count of the nth uservarstring structure.
-	  * If not found, returns -1.
-	  */
+     /**
+      * Given the index of the structure, return the reference count.
+      *
+      * @return The reference count of the nth uservarstring structure.
+      * If not found, returns -1.
+      */
     int get_reference(int idx)
     {
       int pos=get_internal_idx(idx);
@@ -101,26 +101,26 @@ class UserVarsStringList : public SortedStringListND<struct uservarstring>
       return (((struct uservarstring*) m_gr.get())[pos].reference);
     }
 
-	 /**
-	  * Given the index of the structure, increment the reference count.
-	  *
-	  * @return The previous reference count (before the increment).
-	  * If not found, returns -1.
-	  */
+     /**
+      * Given the index of the structure, increment the reference count.
+      *
+      * @return The previous reference count (before the increment).
+      * If not found, returns -1.
+      */
     int inc_reference(int idx)
     {
       int pos=get_internal_idx(idx);
-		if (pos==-1) return -1;
+        if (pos==-1) return -1;
       return ((struct uservarstring*) m_gr.get())[pos].reference++;
     }
 
-	 /**
-	  * Given the index of the structure, return the string value
-	  * of the name.
-	  *
-	  * @return String value of the name as TCHAR*.
-	  * If not found, returns NULL.
-	  */
+     /**
+      * Given the index of the structure, return the string value
+      * of the name.
+      *
+      * @return String value of the name as TCHAR*.
+      * If not found, returns NULL.
+      */
     TCHAR *idx2name(int idx)
     {
       int pos=get_internal_idx(idx);

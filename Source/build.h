@@ -1,4 +1,4 @@
-/*
+﻿/*
  * build.h
  * 
  * This file is a part of NSIS.
@@ -281,7 +281,7 @@ class CEXEBuild {
      * it will get the LanguageTable of the last used language or more
      * correctly, the last Language ID that generated a valid return value
      * (not NULL).
-	  *
+      *
      * @param lang [in/out] Language ID reference.  If LANG_NEUTRAL, it gets
      * set to thelast used language ID.
      * @param create Create a new LanguageTable?  Default = true.
@@ -289,21 +289,21 @@ class CEXEBuild {
      */
     LanguageTable *GetLangTable(LANGID &lang, bool create = true);
 
-	 /**
-	  * Get the language name as a TCHAR* and the code page value via an
-	  * out parameter.  It will look for a LanguageTable to get the values.
-	  * If not found, then it will set the codepage to English for ANSI
-	  * or Unicode for Unicode version of NSIS.  The language name is looked
-	  * up via the LanguageTable if it exists, otherwise, it calls
-	  * GetLocaleInfo() with the LANGID to get the string.
-	  *
-	  * This function is not thread-safe!  For a thread-safe version, the
-	  * parameter must include the buffer to write to.
-	  *
-	  * @param lang The language ID
-	  * @param codepage [out] The code page referred to by the language ID.
-	  * @return The language string in English.
-	  */
+     /**
+      * Get the language name as a TCHAR* and the code page value via an
+      * out parameter.  It will look for a LanguageTable to get the values.
+      * If not found, then it will set the codepage to English for ANSI
+      * or Unicode for Unicode version of NSIS.  The language name is looked
+      * up via the LanguageTable if it exists, otherwise, it calls
+      * GetLocaleInfo() with the LANGID to get the string.
+      *
+      * This function is not thread-safe!  For a thread-safe version, the
+      * parameter must include the buffer to write to.
+      *
+      * @param lang The language ID
+      * @param codepage [out] The code page referred to by the language ID.
+      * @return The language string in English.
+      */
     const TCHAR *GetLangNameAndCP(LANGID lang, unsigned int *codepage = NULL);
 
     int DefineLangString(const TCHAR *name, int process=-1);

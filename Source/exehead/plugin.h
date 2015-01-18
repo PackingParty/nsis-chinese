@@ -1,4 +1,4 @@
-/*
+﻿/*
  * plugin.h
  * 
  * This file is a part of NSIS.

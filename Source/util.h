@@ -1,4 +1,4 @@
-/*
+﻿/*
  * util.h
  * 
  * This file is a part of NSIS.
@@ -104,9 +104,9 @@ inline T align_to_512(const T x) {
 
 class BaseResourceManager {
 protected:
-	BaseResourceManager() {}
+    BaseResourceManager() {}
 public:
-	virtual ~BaseResourceManager() {}
+    virtual ~BaseResourceManager() {}
 };
 
 template <typename _RESOURCE, typename _FREE_RESOURCE>
@@ -123,7 +123,7 @@ private: // don't copy instances
 };
 
 #define RM_MANGLE_FREEFUNC(freefunc) \
-	__free_with_##freefunc
+    __free_with_##freefunc
 
 #define RM_DEFINE_FREEFUNC(freefunc) \
 struct RM_MANGLE_FREEFUNC(freefunc) { \
@@ -134,13 +134,13 @@ typedef boost::scoped_ptr<BaseResourceManager> ResourceManagerPtr;
 
 template<typename _FREE_RESOURCE, typename _RESOURCE>
 void createResourceManager(_RESOURCE& resource, ResourceManagerPtr& ptr) {
-	ptr.reset(new ResourceManager<_RESOURCE, _FREE_RESOURCE>(resource));
+    ptr.reset(new ResourceManager<_RESOURCE, _FREE_RESOURCE>(resource));
 }
 
 #define RM_MANGLE_RESOURCE(resource) resource##_autoManager
 #define MANAGE_WITH(resource, freefunc) \
-	ResourceManagerPtr RM_MANGLE_RESOURCE(resource); \
-		createResourceManager<RM_MANGLE_FREEFUNC(freefunc)>( \
+    ResourceManagerPtr RM_MANGLE_RESOURCE(resource); \
+        createResourceManager<RM_MANGLE_FREEFUNC(freefunc)>( \
       resource, RM_MANGLE_RESOURCE(resource))
 
 // Add more resource-freeing functions here when you need them

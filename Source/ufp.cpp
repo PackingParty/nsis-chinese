@@ -1,4 +1,4 @@
-#include <file.h>
+﻿#include <file.h>
 #include <string>
 #include <rope>
 #include "validateunicode.h"

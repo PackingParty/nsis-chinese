@@ -1,4 +1,4 @@
-/*
+﻿/*
  * util.cpp
  * 
  * This file is a part of NSIS.
@@ -734,9 +734,9 @@ static bool GetDLLVersionUsingAPI(const tstring& filepath, DWORD& high, DWORD& l
 // the following structure must be byte-aligned.
 #pragma pack( push, pre_vxd_ver, 1 )
 typedef struct _VXD_VERSION_RESOURCE {
-  char  cType;				// Should not be converted to TCHAR (JP)
+  char  cType;              // Should not be converted to TCHAR (JP)
   WORD  wID;
-  char  cName;				// Should not be converted to TCHAR (JP)
+  char  cName;              // Should not be converted to TCHAR (JP)
   WORD  wOrdinal;
   WORD  wFlags;
   DWORD dwResSize;

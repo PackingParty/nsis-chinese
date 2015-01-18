@@ -1,4 +1,4 @@
-/*
+﻿/*
  * build.cpp
  * 
  * This file is a part of NSIS.
@@ -490,7 +490,7 @@ int CEXEBuild::preprocess_string(tstring& out, const TCHAR *in, WORD codepage/*=
   {
     const TCHAR *np;
 #ifdef _UNICODE
-	 np = CharNext(p);
+     np = CharNext(p);
 #else
     np = CharNextExA(codepage, p, 0);
 #endif

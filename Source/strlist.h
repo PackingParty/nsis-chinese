@@ -1,4 +1,4 @@
-/*
+﻿/*
  * strlist.h: Implementation of the StringList class.
  * 
  * This file is a part of NSIS.
@@ -43,15 +43,15 @@ public:
   /**
    * Adds a string to the StringList.  If the string already exists in the
    * list, then it just returns the index of the found string.
-	*
+    *
    * @param str String to add.
-	*
+    *
    * @param case_sensitive If 0, search for whole string case insensitively.
    * If 1, then search for whole string case sensitively.  If 2, then search
    * for just the end of the string match case sensitively.  Basically it's
    * like searching for regexp('str$') in the list of string.  If -1, then it
    * adds the string regardless of whether there is a match or not!
-	*
+    *
    * @return the index to the string in TCHARs.
    */
   int add(const TCHAR *str, int case_sensitive);
@@ -62,60 +62,60 @@ public:
    * failure.
    * 
    * @param str String to search for.
-	*
+    *
    * @param case_sensitive If 0, search for whole string case insensitively.If
    * 1, then search for whole string case <b>sensitively</b>.  If 2, then
    * search for just the <b>end of the string match</b>, case sensitively.
    * Basically it's like searching for regexp('str$') in the list of string.
-	*
-	* @param idx If not NULL, the *idx is set to the cardinal number of the
-	* string.  In other words, it tells you which nth string it is in the
-	* list.
-	*
+    *
+    * @param idx If not NULL, the *idx is set to the cardinal number of the
+    * string.  In other words, it tells you which nth string it is in the
+    * list.
+    *
    * @return the TCHAR index to the string (not necessarily the byte positional
-	* offset).  -1 if not found.
-	*/
+    * offset).  -1 if not found.
+    */
   int find(const TCHAR *str, int case_sensitive, int *idx=NULL) const; // returns -1 if not found
 
   /**
-	* Delete the string at the positional index.
-	*
-	* @param pos The number of TCHARS to count from the beginning of the buffer
-	* before the start of the string.
-	*/
+    * Delete the string at the positional index.
+    *
+    * @param pos The number of TCHARS to count from the beginning of the buffer
+    * before the start of the string.
+    */
   void delbypos(int pos);
 
   /**
-	* Converts the string index to the positional TCHAR index.  For example,
-	* it gives the answer to which TCHAR position is the beginning of the
-	* nth string in the list?
-	*
-	* @param idx The string index.
-	*/
+    * Converts the string index to the positional TCHAR index.  For example,
+    * it gives the answer to which TCHAR position is the beginning of the
+    * nth string in the list?
+    *
+    * @param idx The string index.
+    */
   int idx2pos(int idx) const;
 
   /**
-	* Get the count of the number of strings in the list.
-	* @return the number of string in the list.
-	*/
+    * Get the count of the number of strings in the list.
+    * @return the number of string in the list.
+    */
   int getnum() const;
 
   /**
-	* Get the buffer straight as a const TCHAR pointer.  Very unwise to use.
-	* @return gr.m_s cast as a TCHAR*.
-	*/
+    * Get the buffer straight as a const TCHAR pointer.  Very unwise to use.
+    * @return gr.m_s cast as a TCHAR*.
+    */
   const TCHAR *get() const;
 
   /**
-	* Get the buffer size in bytes.
-	* @return The buffer size in bytes.
-	*/
+    * Get the buffer size in bytes.
+    * @return The buffer size in bytes.
+    */
   int getlen() const;
 
   /**
-	* Get the buffer size in TCHARs.
-	* @return The buffer size in TCHARs.
-	*/
+    * Get the buffer size in TCHARs.
+    * @return The buffer size in TCHARs.
+    */
   int getcount() const;
 
 private:
@@ -135,10 +135,10 @@ template <class T>
 class SortedStringList
 {
   public:
-	 /**
-	  * Jim Park: Note that SortedStringList actually <b>owns</b> T.name.
-	  * Yes, this violates all kinds of encapsulation ideas.
-	  */
+     /**
+      * Jim Park: Note that SortedStringList actually <b>owns</b> T.name.
+      * Yes, this violates all kinds of encapsulation ideas.
+      */
     virtual ~SortedStringList()
     {
       T *s=(T*) m_gr.get();
@@ -149,16 +149,16 @@ class SortedStringList
       }
     }
 
-	 /**
-	  * This function adds a new T struct with a copy of TCHAR *name into
-	  * T.name.  But adds it into a sorted position.  All calls to
-	  * add must be done with the same value for case_sensitive or you
-	  * can get random behavior.
-	  *
-	  * @param name The name which is the "key" to finding the instance of T.
-	  * @param case_sensitive 1 means case sensitive, 0 insensitive.
+     /**
+      * This function adds a new T struct with a copy of TCHAR *name into
+      * T.name.  But adds it into a sorted position.  All calls to
+      * add must be done with the same value for case_sensitive or you
+      * can get random behavior.
+      *
+      * @param name The name which is the "key" to finding the instance of T.
+      * @param case_sensitive 1 means case sensitive, 0 insensitive.
      * @return Returns -1 when name already exists and pos if added.
-	  */
+      */
     int add(const TCHAR *name, int case_sensitive=0)
     {
       T newstruct={0,};
@@ -187,22 +187,22 @@ class SortedStringList
       return pos;
     }
 
-	 /**
+     /**
      * This function does a binary search for the T in the buffer that
      * contains str as its T.name.  It then returns the position of the found
      * T, not in its byte position, but its T position (valid offset to T*).
-	  *
+      *
      * @param str The string to search for in T.name.
-	  *
+      *
      * @param case_sensitive If 1, do a case sensitive search, otherwise, case insensitive.
-	  *
+      *
      * @param returnbestpos If 1, then the function changes behavior.  Instead
      * of looking for the string str in the Ts, it tries to find the best
      * sorted position to insert str into the buffer.
-	  *
+      *
      * @return Returns -1 if not found, position if found.  If returnbestpos=1
      * returns -1 if found, best pos to insert if not found
-	  */
+      */
     int find(const TCHAR *str, int case_sensitive=0, int returnbestpos=0)
     {
       T *data=(T *) m_gr.get();
@@ -226,12 +226,12 @@ class SortedStringList
       return returnbestpos ? nextpos : -1;
     }
 
-	 /**
-	  * This function looks for str in T.name and deletes the T in the
-	  * buffer.
-	  *
-	  * @return Returns 0 on success, 1 on failure.
-	  */
+     /**
+      * This function looks for str in T.name and deletes the T in the
+      * buffer.
+      *
+      * @return Returns 0 on success, 1 on failure.
+      */
     int del(const TCHAR *str, int case_sensitive=0)
     {
       int pos=find(str, case_sensitive);
@@ -242,12 +242,12 @@ class SortedStringList
       return 0;
     }
 
-	 /**
-	  * Given a T position, it deletes it from the buffer.  It will
-	  * move the rest of the Ts to fill its position.
-	  *
-	  * @param pos The position of the target for deletion in T* offsets.
-	  */
+     /**
+      * Given a T position, it deletes it from the buffer.  It will
+      * move the rest of the Ts to fill its position.
+      *
+      * @param pos The position of the target for deletion in T* offsets.
+      */
     void delbypos(int pos)
     {
       T *db=(T *) m_gr.get();
@@ -284,30 +284,30 @@ class SortedStringListND // no delete - can be placed in GrowBuf
     SortedStringListND() { }
     virtual ~SortedStringListND() { }
 
-	 /**
-	  * Adds name into the list of sorted strings.
-	  *
-	  * @param name String to store.
-	  * @param case_sensitive Look for string case sensitively.  Default is 0.
-	  * @param alwaysreturnpos Always return the position regardless of whether
-	  * name was inserted into the list or not.  The default is 0.
-	  *
-	  * @return Returns -1 when name already exists, otherwise the T offset
-	  * into which the struct was stored in m_gr.  If alwaysreturnpos
-	  * is true, then it will return the byte offset regardless of whether
-	  * the string was found.
-	  */
+     /**
+      * Adds name into the list of sorted strings.
+      *
+      * @param name String to store.
+      * @param case_sensitive Look for string case sensitively.  Default is 0.
+      * @param alwaysreturnpos Always return the position regardless of whether
+      * name was inserted into the list or not.  The default is 0.
+      *
+      * @return Returns -1 when name already exists, otherwise the T offset
+      * into which the struct was stored in m_gr.  If alwaysreturnpos
+      * is true, then it will return the byte offset regardless of whether
+      * the string was found.
+      */
     int add(const TCHAR *name, int case_sensitive=0, int alwaysreturnpos=0)
     {
       int where=0;
       T newstruct={0,};
 
-		// Find the best position to insert.
+        // Find the best position to insert.
       int pos=find(name,-1,case_sensitive,1,&where);
 
       if (pos==-1) return alwaysreturnpos ? where : -1;
 
-		// Note that .name is set with the TCHAR* offset into m_strings.
+        // Note that .name is set with the TCHAR* offset into m_strings.
       newstruct.name=(m_strings.add(name,(_tcsclen(name)+1)*sizeof(TCHAR)))/sizeof(TCHAR);
 
       m_gr.add(&newstruct,sizeof(T));
@@ -318,46 +318,46 @@ class SortedStringListND // no delete - can be placed in GrowBuf
       return pos;
     }
 
-	 /**
-	  * This function looks for the string str, in T.name in the buffer m_gr.
-	  * If it finds it, it returns the position found.  Otherwise, it returns
-	  * -1.  
-	  *
-	  * This behavior changes when returnbestpos == 1.  In this case,
-	  * it will do the reverse.  It will return -1 when it is found, noting
-	  * that there is no good place to put this duplicate string.  If it
-	  * is <b>not</b> found, it returns the position where it ought to be
-	  * placed.
-	  *
-	  * When case_sensitive == -1 and returnbestpos == 1, then when the string
-	  * is found, it returns
-	  * the position of the string so that one can overwrite it.  Very strange
-	  * special case behavior that I'm not sure if anyone actually uses.
-	  *
-	  * @param str The key string to search for.
-	  *
-	  * @param n_chars The number of characters to compare.  Use -1 to match
-	  * the entire string.
-	  *
-	  * @param case_sensitive 1 = case sensitive, 0 = case insensitive,
-	  * -1 is a special case where it is case sensitive and overrides the
-	  * returnbestpos behavior when the string is found.
-	  *
-	  * @param returnbestpos If 1, then look for the best position to add the
-	  * string.  If found in the list, return -1.
-	  *
-	  * @param where When str is found, returns the position of the string.
-	  *
-	  * @return The position of T where T.name == str.  If returnbestpos != 0
-	  * then return the best position to add T if not found, otherwise, -1.
-	  */
+     /**
+      * This function looks for the string str, in T.name in the buffer m_gr.
+      * If it finds it, it returns the position found.  Otherwise, it returns
+      * -1.  
+      *
+      * This behavior changes when returnbestpos == 1.  In this case,
+      * it will do the reverse.  It will return -1 when it is found, noting
+      * that there is no good place to put this duplicate string.  If it
+      * is <b>not</b> found, it returns the position where it ought to be
+      * placed.
+      *
+      * When case_sensitive == -1 and returnbestpos == 1, then when the string
+      * is found, it returns
+      * the position of the string so that one can overwrite it.  Very strange
+      * special case behavior that I'm not sure if anyone actually uses.
+      *
+      * @param str The key string to search for.
+      *
+      * @param n_chars The number of characters to compare.  Use -1 to match
+      * the entire string.
+      *
+      * @param case_sensitive 1 = case sensitive, 0 = case insensitive,
+      * -1 is a special case where it is case sensitive and overrides the
+      * returnbestpos behavior when the string is found.
+      *
+      * @param returnbestpos If 1, then look for the best position to add the
+      * string.  If found in the list, return -1.
+      *
+      * @param where When str is found, returns the position of the string.
+      *
+      * @return The position of T where T.name == str.  If returnbestpos != 0
+      * then return the best position to add T if not found, otherwise, -1.
+      */
     int find
     (
-	    const TCHAR* 	str,					/* key to search for */
-		 int 				n_chars=-1,			/* if -1, test the entire string, otherwise just n characters */
-		 int				case_sensitive=0,
-		 int				returnbestpos=0,	/* if not found, return best pos */
-		 int*				where=0				/* */
+        const TCHAR*    str,                    /* key to search for */
+         int                n_chars=-1,         /* if -1, test the entire string, otherwise just n characters */
+         int                case_sensitive=0,
+         int                returnbestpos=0,    /* if not found, return best pos */
+         int*               where=0             /* */
     )
     {
       T *data=(T *) m_gr.get();
@@ -365,7 +365,7 @@ class SortedStringListND // no delete - can be placed in GrowBuf
       int ll = 0;
       int nextpos = (ul+ll)/2;
 
-		// Do binary search on m_gr which is sorted. m_strings is NOT sorted.
+        // Do binary search on m_gr which is sorted. m_strings is NOT sorted.
       while (ul > ll)
       {
         int res;
@@ -379,28 +379,28 @@ class SortedStringListND // no delete - can be placed in GrowBuf
         }
         else
         {
-		    unsigned int pCurr_len = _tcslen(pCurr);
+            unsigned int pCurr_len = _tcslen(pCurr);
           if (case_sensitive)
             res = _tcsncmp(str, pCurr, mymin((unsigned int) n_chars, pCurr_len));
           else
             res = _tcsncicmp(str, pCurr, mymin((unsigned int) n_chars, pCurr_len));
 
-			 // If there is a match and we are looking for a partial match and
-			 // n_chars is NOT the length of the current string, then the
-			 // comparison result is determined by the length comparison.
+             // If there is a match and we are looking for a partial match and
+             // n_chars is NOT the length of the current string, then the
+             // comparison result is determined by the length comparison.
           if (res == 0 && n_chars != -1 && (unsigned int) n_chars != pCurr_len)
             res = n_chars - pCurr_len;
         }
 
-		  // Found!
+          // Found!
         if (res==0)
         {
-			 // Return where we found it in *where.
+             // Return where we found it in *where.
           if (where) *where = nextpos;
 
-			 // If returnbestpos, then we should return -1, otherwise where
-			 // we found it.  But if (returnbestpos && case_sensitive == -1)
-			 // returns nextpos.
+             // If returnbestpos, then we should return -1, otherwise where
+             // we found it.  But if (returnbestpos && case_sensitive == -1)
+             // returns nextpos.
           return returnbestpos ? (case_sensitive!=-1 ? -1 : nextpos) : nextpos;
         }
         if (res<0) ul=nextpos;
@@ -412,17 +412,17 @@ class SortedStringListND // no delete - can be placed in GrowBuf
     }
 
   protected:
-    TinyGrowBuf m_gr;			// Sorted array of Ts
-    GrowBuf     m_strings;		// Unsorted array of TCHAR strings
-	 									//  (contains the .names)
+    TinyGrowBuf m_gr;           // Sorted array of Ts
+    GrowBuf     m_strings;      // Unsorted array of TCHAR strings
+                                        //  (contains the .names)
 };
 
 /**
  * Structure stored by DefineList.
  */
 struct define {
-  TCHAR *name;		// key
-  TCHAR *value;	// value stored
+  TCHAR *name;      // key
+  TCHAR *value; // value stored
 };
 
 /**
@@ -436,11 +436,11 @@ class DefineList : public SortedStringList<struct define>
     void operator=(const DefineList&);
 
   public:
-	 /* Empty default constructor */
+     /* Empty default constructor */
     DefineList() {} // VC6 complains otherwise
     virtual ~DefineList();
 
-	 /**
+     /**
      * Add a name-value pair, case insensitively.
      * 
      * @param name The name of the variable or key to search by.  In a
@@ -450,45 +450,45 @@ class DefineList : public SortedStringList<struct define>
      * of the pair.
      * 
      * @return Returns 0 if successful, 1 if already exists.  Errors cause
-	  * general program exit with error logging.
-	  */
+      * general program exit with error logging.
+      */
     int add(const TCHAR *name, const TCHAR *value=_T(""));
 
-	 /**
-	  * This function returns the pointer to the .value TCHAR* that corresponds
-	  * to the name key.
-	  *
-	  * @param name The key to search with.
-	  * 
-	  * @return The TCHAR* to the value portion of the define struct.  If not
-	  * found, returns NULL.
-	  */
+     /**
+      * This function returns the pointer to the .value TCHAR* that corresponds
+      * to the name key.
+      *
+      * @param name The key to search with.
+      * 
+      * @return The TCHAR* to the value portion of the define struct.  If not
+      * found, returns NULL.
+      */
     TCHAR *find(const TCHAR *name);
 
-	 /**
-	  * This function deletes the define struct corresponding to the key 'str'.
-	  *
-	  * @return Returns 0 on success, 1 otherwise
-	  */
+     /**
+      * This function deletes the define struct corresponding to the key 'str'.
+      *
+      * @return Returns 0 on success, 1 otherwise
+      */
     int del(const TCHAR *str);
 
-	 /**
-	  * This function returns the number of define structs in the sorted array.
-	  */
+     /**
+      * This function returns the number of define structs in the sorted array.
+      */
     int getnum();
 
-	 /**
-	  * Get the .name string of the (num)th define struct in the sorted array.
-	  *
-	  * @return Returns 0 if not found, otherwise the pointer to the .name.
-	  */
+     /**
+      * Get the .name string of the (num)th define struct in the sorted array.
+      *
+      * @return Returns 0 if not found, otherwise the pointer to the .name.
+      */
     TCHAR *getname(int num);
 
-	 /**
-	  * Get the .value string of the (num)th define struct in the sorted array.
-	  *
-	  * @return Returns 0 if not found, otherwise the pointer to the .value.
-	  */
+     /**
+      * Get the .value string of the (num)th define struct in the sorted array.
+      *
+      * @return Returns 0 if not found, otherwise the pointer to the .value.
+      */
     TCHAR *getvalue(int num);
 };
 
@@ -515,53 +515,53 @@ class FastStringList : public SortedStringListND<struct string_t>
     void operator=(const FastStringList&);
     
   public:
-	 /* Empty constructor */
+     /* Empty constructor */
     FastStringList() {} // VC6 complains otherwise
 
-	 /* Empty virtual destructor */
+     /* Empty virtual destructor */
     virtual ~FastStringList() {}
 
-	 /**
-	  * Adds name to sorted array and returns the TCHAR* offset of m_strings
-	  * where it is stored.
-	  *
-	  * @param name The string to store.
-	  *
-	  * @param case_sensitive Should we store this case sensitively or not?
-	  * Setting case_sensitive to -1 will cause it to be case sensitive and
-	  * always overwrite.  (Weird bad behavior).
-	  *
-	  * @return The TCHAR* offset of name in m_string as an int.
-	  */
+     /**
+      * Adds name to sorted array and returns the TCHAR* offset of m_strings
+      * where it is stored.
+      *
+      * @param name The string to store.
+      *
+      * @param case_sensitive Should we store this case sensitively or not?
+      * Setting case_sensitive to -1 will cause it to be case sensitive and
+      * always overwrite.  (Weird bad behavior).
+      *
+      * @return The TCHAR* offset of name in m_string as an int.
+      */
     int add(const TCHAR *name, int case_sensitive=0);
 
-	 /**
-	  * Get the buffer that contains the list of the strings in the order
-	  * in which they were added.
-	  *
-	  * @return The pointer to m_strings as a TCHAR*.
-	  */
+     /**
+      * Get the buffer that contains the list of the strings in the order
+      * in which they were added.
+      *
+      * @return The pointer to m_strings as a TCHAR*.
+      */
     TCHAR *get() const;
 
-	 /**
-	  * The size of the collection of m_strings as bytes.
-	  *
-	  * @return The size of m_strings in bytes.
-	  */
+     /**
+      * The size of the collection of m_strings as bytes.
+      *
+      * @return The size of m_strings in bytes.
+      */
     int getlen() const;
 
-	 /**
-	  * The size of the collection of m_strings as a count of TCHARs.
-	  *
-	  * @return the size of m_strings as count of TCHARs.
-	  */
-	 int getcount() const;
+     /**
+      * The size of the collection of m_strings as a count of TCHARs.
+      *
+      * @return the size of m_strings as count of TCHARs.
+      */
+     int getcount() const;
 
-	 /**
-	  * The number of strings stored in the sorted array.
-	  *
-	  * @return The number of strings stored.
-	  */
+     /**
+      * The number of strings stored in the sorted array.
+      *
+      * @return The number of strings stored.
+      */
     int getnum() const;
 };
 

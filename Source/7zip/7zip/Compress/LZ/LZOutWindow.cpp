@@ -1,4 +1,4 @@
-/*
+﻿/*
  * LZOutWindow.cpp
  * 
  * This file is a part of LZMA compression module for NSIS.

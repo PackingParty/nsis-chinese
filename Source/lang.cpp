@@ -1,4 +1,4 @@
-/*
+﻿/*
  * lang.cpp
  * 
  * This file is a part of NSIS.
@@ -211,7 +211,7 @@ const TCHAR* LangStringList::pos2name(int pos)
   struct langstring *data=(struct langstring *) m_gr.get();
 
   if ((unsigned int) pos > (m_gr.getlen() / sizeof(struct langstring))
-		|| pos < 0)
+        || pos < 0)
   {
     return 0;
   }
@@ -222,7 +222,7 @@ const TCHAR* LangStringList::pos2name(int pos)
 const TCHAR* LangStringList::offset2name(int name)
 {
   if ((unsigned int) name > (m_strings.getlen() / sizeof(TCHAR))
-		|| name < 0)
+        || name < 0)
   {
     return 0;
   }
@@ -402,11 +402,11 @@ const TCHAR *CEXEBuild::GetLangNameAndCP(LANGID lang, unsigned int *codepage/*=N
     return table->nlf.m_szName;
   }
   else {
-	 // If the language table does not exist, then we default to Unicode in the
-	 // Unicode version and English in the ANSI version.
+     // If the language table does not exist, then we default to Unicode in the
+     // Unicode version and English in the ANSI version.
 #ifdef _UNICODE
-	 if (codepage)
-		*codepage = 1200; // Unicode
+     if (codepage)
+        *codepage = 1200; // Unicode
 #else
     if (codepage)
       *codepage = 1252; // English US
@@ -414,17 +414,17 @@ const TCHAR *CEXEBuild::GetLangNameAndCP(LANGID lang, unsigned int *codepage/*=N
 
 #if 0 // For Vista and later, untested...
     if (::GetLocaleInfo(MAKELCID(lang, SORT_DEFAULT),
-		     LOCALE_SENGLANGUAGE,
-		     szLangName,
-		     sizeof(szLangName)/sizeof(szLangName[0])) 
+             LOCALE_SENGLANGUAGE,
+             szLangName,
+             sizeof(szLangName)/sizeof(szLangName[0])) 
         != 0)
-	 {
-		 return szLangName;
-	 }
-	 else
-	 {
-		 return _T("???");
-	 }
+     {
+         return szLangName;
+     }
+     else
+     {
+         return _T("???");
+     }
 #endif
     if (lang == 1033)
       return _T("English");

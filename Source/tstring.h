@@ -1,4 +1,4 @@
-// tstring.h
+﻿// tstring.h
 //
 // This file is a part of Unicode NSIS.
 //

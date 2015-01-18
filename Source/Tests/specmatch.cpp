@@ -1,4 +1,4 @@
-#include <cppunit/extensions/HelperMacros.h>
+﻿#include <cppunit/extensions/HelperMacros.h>
 #include "../dirreader.h"
 
 #include "tstring.h"

@@ -1,4 +1,4 @@
-#ifndef BOOST_CHECKED_DELETE_HPP_INCLUDED
+﻿#ifndef BOOST_CHECKED_DELETE_HPP_INCLUDED
 #define BOOST_CHECKED_DELETE_HPP_INCLUDED
 
 // MS compatible compilers support #pragma once

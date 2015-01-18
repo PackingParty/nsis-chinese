@@ -1,4 +1,4 @@
-// Unicode support by Jim Park -- 11/16/2007
+﻿// Unicode support by Jim Park -- 11/16/2007
 
 #include "Platform.h"
 #include "icon.h"

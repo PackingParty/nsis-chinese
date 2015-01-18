@@ -1,4 +1,4 @@
-/*
+﻿/*
  * growbuf.cpp
  * 
  * This file is a part of NSIS.
@@ -90,7 +90,7 @@ void GrowBuf::resize(int newlen)
     memset((BYTE*)m_s + ou, 0, m_used - ou);
 
   if (!m_used && m_alloc > 2*m_bs) // only free if you resize to 0 and we're > 64k or
-	  										  // 2K in the case of TinyGrowBuf
+                                              // 2K in the case of TinyGrowBuf
   {
     m_alloc=0;
     free(m_s);

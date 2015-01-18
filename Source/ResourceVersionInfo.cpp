@@ -1,4 +1,4 @@
-/*
+﻿/*
  * ResourceVersionInfo.cpp: implementation of the CResourceVersionInfo class.
  * 
  * This file is a part of NSIS.
@@ -125,13 +125,13 @@ void CResourceVersionInfo::SetFileFlags(int Value)
     // Jim Park: This looks wrong.  This will only set the dwFileFlags to true
     // or false meaning 0 or 1.  But it's also never used, so I guess it's
     // fine. 
-	 // m_FixedInfo.dwFileFlags = (m_FixedInfo.dwFileFlags & ~(m_FixedInfo.dwFileFlagsMask)) || Value;
+     // m_FixedInfo.dwFileFlags = (m_FixedInfo.dwFileFlags & ~(m_FixedInfo.dwFileFlagsMask)) || Value;
     // 
     // Jim Park: My fix is below.  This also does no good since
     // dwFileFlagsMask does not get changed from 0 set in the constructor.  So
     // dwFileFlags will stay zero since no  flags are set to be legal in the
     // mask.
-	 m_FixedInfo.dwFileFlags |= Value & m_FixedInfo.dwFileFlagsMask;
+     m_FixedInfo.dwFileFlags |= Value & m_FixedInfo.dwFileFlagsMask;
 }
 
 void CResourceVersionInfo::SetFileVersion(int HighPart, int LowPart)

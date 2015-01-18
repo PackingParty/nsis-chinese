@@ -1,4 +1,4 @@
-/*
+﻿/*
  * main.c: executable header main code
  * 
  * This file is a part of NSIS.

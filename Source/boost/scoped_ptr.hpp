@@ -1,4 +1,4 @@
-#ifndef BOOST_SCOPED_PTR_HPP_INCLUDED
+﻿#ifndef BOOST_SCOPED_PTR_HPP_INCLUDED
 #define BOOST_SCOPED_PTR_HPP_INCLUDED
 
 //  (C) Copyright Greg Colvin and Beman Dawes 1998, 1999.

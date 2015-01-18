@@ -1,4 +1,4 @@
-/*
+﻿/*
  * makenssi.cpp
  * 
  * This file is a part of NSIS.
@@ -146,7 +146,7 @@ static void print_usage()
          _T("    ") OPT_STR _T("Xscriptcmd executes scriptcmd in script (i.e. \"") OPT_STR _T("XOutFile poop.exe\")\n")
          _T("   parameters are processed by order (") OPT_STR _T("Ddef ins.nsi != ins.nsi ") OPT_STR _T("Ddef)\n")
          _T("   for script file name, you can use - to read from the standard input\n")
-#ifdef _WIN32	
+#ifdef _WIN32   
          _T("   you can also use - as an option character: -PAUSE as well as /PAUSE\n")
 #endif
          _T("   you can use a double-dash to end options processing: makensis -- -ins.nsi\n"));

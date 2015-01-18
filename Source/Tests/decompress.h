@@ -1,4 +1,4 @@
-class IDecompressor {
+﻿class IDecompressor {
 public:
 
   virtual ~IDecompressor() {};

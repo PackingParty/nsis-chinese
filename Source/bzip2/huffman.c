@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is a part of the bzip2 compression module for NSIS.
  * 
  * Copyright and license information can be found below.

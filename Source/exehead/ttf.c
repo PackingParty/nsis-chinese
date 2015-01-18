@@ -1,4 +1,4 @@
-#include "ttf.h"
+﻿#include "ttf.h"
 #include "util.h"
 #include <windows.h>
 

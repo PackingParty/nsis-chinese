@@ -1,4 +1,4 @@
-/*
+﻿/*
  * strlist.cpp: Implementation of the StringList class.
  * 
  * This file is a part of NSIS.
@@ -45,7 +45,7 @@ int StringList::find(const TCHAR *str, int case_sensitive, int *idx/*=NULL*/) co
       return offs;
     }
 
-	 offs_slen = _tcsclen(s+offs);
+     offs_slen = _tcsclen(s+offs);
 
     // Check if just the end of the string matches str.
     if (case_sensitive==2 &&
@@ -69,8 +69,8 @@ void StringList::delbypos(int pos)
 
   if (pos+len < m_gr.getlen()) 
   {
-	  // Move everything after the string position to the current position.
-	  memcpy(s+pos,s+pos+len, m_gr.getlen()-((pos+len)*sizeof(TCHAR)));
+      // Move everything after the string position to the current position.
+      memcpy(s+pos,s+pos+len, m_gr.getlen()-((pos+len)*sizeof(TCHAR)));
   }
   m_gr.resize(m_gr.getlen()-(len*sizeof(TCHAR)));
 }
@@ -116,7 +116,7 @@ int StringList::getlen() const
 
 int StringList::getcount() const
 {
-	return m_gr.getlen() / sizeof(TCHAR);
+    return m_gr.getlen() / sizeof(TCHAR);
 }
 
 // ==========

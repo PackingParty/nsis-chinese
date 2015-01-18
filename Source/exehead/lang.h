@@ -1,4 +1,4 @@
-/*
+﻿/*
  * lang.c
  * 
  * This file is a part of NSIS.

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * util.c
  * 
  * This file is a part of NSIS.
@@ -1384,8 +1384,8 @@ int NSISCALL FindProc(const TCHAR *szToFind)
                 if(lstrcmp(modentry.szModule,szToTermUpper)==0)
                 {
                     // Process found
-					          CloseHandle(hSnapShotm);
-					          CloseHandle(hSnapShot);
+                              CloseHandle(hSnapShotm);
+                              CloseHandle(hSnapShot);
                     FreeLibrary(hInstLib);
                     return 1;
                 }

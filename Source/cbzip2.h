@@ -1,4 +1,4 @@
-/*
+﻿/*
  * cbzip2.h
  * 
  * This file is a part of NSIS.

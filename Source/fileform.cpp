@@ -1,4 +1,4 @@
-/*
+﻿/*
  * fileform.cpp
  * 
  * This file is a part of NSIS.

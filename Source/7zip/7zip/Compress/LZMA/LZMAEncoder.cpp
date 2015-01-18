@@ -1,4 +1,4 @@
-/*
+﻿/*
  * LZMAEncoder.cpp
  * 
  * This file is a part of LZMA compression module for NSIS.
@@ -847,7 +847,7 @@ HRESULT CEncoder::GetOptimum(UInt32 position, UInt32 &backRes, UInt32 &lenRes)
       if (pos < kNumRepDistances)
       {
         reps[0] = prevOptimum.Backs[pos];
-    		UInt32 i;
+            UInt32 i;
         for(i = 1; i <= pos; i++)
           reps[i] = prevOptimum.Backs[i - 1];
         for(; i < kNumRepDistances; i++)
@@ -1552,7 +1552,7 @@ void CEncoder::FillDistancesPrices()
 
   for (UInt32 lenToPosState = 0; lenToPosState < kNumLenToPosStates; lenToPosState++)
   {
-	  UInt32 posSlot;
+      UInt32 posSlot;
     NRangeCoder::CBitTreeEncoder<kNumMoveBits, kNumPosSlotBits> &encoder = _posSlotEncoder[lenToPosState];
     UInt32 *posSlotPrices = _posSlotPrices[lenToPosState];
     for (posSlot = 0; posSlot < _distTableSize; posSlot++)
@@ -1561,7 +1561,7 @@ void CEncoder::FillDistancesPrices()
       posSlotPrices[posSlot] += ((((posSlot >> 1) - 1) - kNumAlignBits) << NRangeCoder::kNumBitPriceShiftBits);
 
     UInt32 *distancesPrices = _distancesPrices[lenToPosState];
-	  UInt32 i;
+      UInt32 i;
     for (i = 0; i < kStartPosModelIndex; i++)
       distancesPrices[i] = posSlotPrices[i];
     for (; i < kNumFullDistances; i++)
