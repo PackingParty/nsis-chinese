@@ -58,7 +58,7 @@ void dopause(void)
 {
   if (g_dopause)
   {
-    if (g_display_errors) _ftprintf(g_output,_T("MakeNSIS done - hit enter to close..."));
+    if (g_display_errors) _ftprintf(g_output,_T("MakeNSIS完成 - 按【回车】关闭..."));
     fflush(stdout);
     int a;
     while ((a=_gettchar()) != _T('\r') && a != _T('\n') && a != 27/*esc*/);
@@ -299,7 +299,7 @@ TCHAR *my_convert(const TCHAR *path)
 
   if(!converted_path)
   {
-    MY_ERROR_MSG(_T("Error: could not allocate memory in my_convert()\n"));
+    MY_ERROR_MSG(_T("错误：函数my_convert()无法分配内存\n"));
     return (TCHAR*) path; /* dirty */
   }
 
@@ -527,7 +527,7 @@ int MySystemCall(const TCHAR* command)
   
   if (!CreatePipe(&read_stdout,&newstdout,&sa,0))
   {
-    throw runtime_error("Can't create stdout pipe!");
+    throw runtime_error("无法创建标准输出（stdout）管道！");
     return 1;
   }
   
@@ -535,7 +535,7 @@ int MySystemCall(const TCHAR* command)
   {
    CloseHandle(newstdout);
    CloseHandle(read_stdout);
-   throw runtime_error("Can't create stdin pipe!");
+   throw runtime_error("无法创建标准输入（stdin）管道！");
    return 1;
   }
   

@@ -94,7 +94,7 @@ bool GetTTFNameString(TCHAR* ttfFileName, int field, TCHAR* buf, int bufChars)
    {
       // ERROR_MSG(_T("%sFile: failed opening file \"%s\"\n"),generatecode?_T(""):_T("Reserve"),newfn);
       //
-      _tprintf(_T("%s: failed opening file \"%s\"\n"), _T("GetTTFVersion"), ttfFileName);
+      _tprintf(_T("%s: 打开文件时出错（\"%s\"）\n"), _T("GetTTFVersion"), ttfFileName);
    }
    else
    {

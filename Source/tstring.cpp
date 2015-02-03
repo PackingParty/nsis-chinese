@@ -159,12 +159,12 @@ FILE* FileOpenUnicodeText(const TCHAR* file, const TCHAR* mode)
                    case CValidateUnicode::UTF_8:
                    case CValidateUnicode::UTF_16LE:
                    case CValidateUnicode::UTF_16BE:
-                       INFO_MSG(_T("File '%s' has a BOM marked as %s.\n"),
+                       INFO_MSG(_T("文件'%s'有BOM标记，是%s编码格式。\n"),
                            file, CValidateUnicode::TypeToName(ftype));
                        break;
                    case CValidateUnicode::UTF_32LE:
                    case CValidateUnicode::UTF_32BE:
-                       ERROR_MSG(_T("File '%s' has a BOM marked as %s which is not supported at this time.\n"),
+                       ERROR_MSG(_T("文件'%s'有BOM标记，是%s编码格式，但是现在还不支持。\n"),
                                file, CValidateUnicode::TypeToName(ftype));
                        return NULL;
                        break;
@@ -173,15 +173,15 @@ FILE* FileOpenUnicodeText(const TCHAR* file, const TCHAR* mode)
                        if (CValidateUnicode::ValidateUTF8(&buffer[0], buffer.size()))
                        {
                            ftype = CValidateUnicode::UTF_8;
-                           INFO_MSG(_T("File '%s' has no BOM but validates as UTF-8.\n"), file);
+                           INFO_MSG(_T("文件'%s'没有BOM标记但可以确认为是UTF-8编码格式。\n"), file);
                        }
                        else
                        {
-                           WARN_MSG(_T("File '%s' has no BOM and does not validate as UTF-8.\n"), file);
+                           WARN_MSG(_T("文件'%s'没有BOM标记且不能确认为UTF-8编码格式。\n"), file);
                        }
                        break;
                    default:
-                       ERROR_MSG(_T("CValidateUnicode::CheckBOM() for file '%s' returned an unknown return value: %d\n"),
+                       ERROR_MSG(_T("CValidateUnicode::CheckBOM()函数检查文件'%s'时返回了一个未知的返回值：%d\n"),
                                file, ftype);
                        return NULL;
                        break;
@@ -196,16 +196,16 @@ FILE* FileOpenUnicodeText(const TCHAR* file, const TCHAR* mode)
     {
         case CValidateUnicode::UTF_8:
             strMode.append(_T(", ccs=UTF-8"));
-            INFO_MSG(_T("Opening '%s' as UTF-8.\n"), file);
+            INFO_MSG(_T("正在用UTF-8编码格式打开文件'%s'\n"), file);
             break;
         case CValidateUnicode::UTF_16LE:
             strMode.append(_T(", ccs=UTF-16LE"));
-            INFO_MSG(_T("Opening '%s' as UTF-16LE.\n"), file);
+            INFO_MSG(_T("正在用UTF-16LE编码格式打开文件'%s'\n"), file);
             break;
         default:
             // Looks like fopen() doesn't support other encodings of Unicode.
             strMode.append(_T(", ccs=UNICODE"));
-            INFO_MSG(_T("Opening '%s' as ANSI.\n"), file);
+            INFO_MSG(_T("正在用ANSI编码格式打开文件'%s'\n"), file);
             break;
     }
 

@@ -111,26 +111,26 @@ DWORD CALLBACK UpdateThread(LPVOID v) {
   }
   if (error) {
     char buf[1000];
-    wsprintfA(buf, "There was a problem checking for an update.  Please try again later.\n\nError: %s",get->geterrorstr());
-    MessageBoxA(g_sdata.hwnd,buf,"NSIS Update",MB_OK|MB_ICONINFORMATION);
+    wsprintfA(buf, "检查更新时出了问题，请稍后再试。\n\错误: %s",get->geterrorstr());
+    MessageBoxA(g_sdata.hwnd,buf,"NSIS更新",MB_OK|MB_ICONINFORMATION);
   }
   else if (*response=='1'&&lstrlenA(response)>2) {
     char buf[200];
     response+=2;
-    wsprintfA(buf, "NSIS %s is now available.  Would you like to download it now?",response);
-    if (MessageBoxA(g_sdata.hwnd,buf,"NSIS Update",MB_YESNO|MB_ICONINFORMATION)==IDYES) {
+    wsprintfA(buf, "现在有新版的NSIS %s可用，你想现在就下载吗？",response);
+    if (MessageBoxA(g_sdata.hwnd,buf,"NSIS更新",MB_YESNO|MB_ICONINFORMATION)==IDYES) {
       ShellExecuteA(g_sdata.hwnd,"open",NSIS_DL_URL,NULL,NULL,SW_SHOWNORMAL);
     }
   }
   else if (*response=='2'&&lstrlenA(response)>2) {
     char buf[200];
     response+=2;
-    wsprintfA(buf,"NSIS %s is now available.  Would you like to download this preview release now?",response);
-    if (MessageBoxA(g_sdata.hwnd,buf,"NSIS Update",MB_YESNO|MB_ICONINFORMATION)==IDYES) {
+    wsprintfA(buf,"现在有新版的NSIS %s可用，你想现在就下载这个预发布版本吗？",response);
+    if (MessageBoxA(g_sdata.hwnd,buf,"NSIS更新",MB_YESNO|MB_ICONINFORMATION)==IDYES) {
       ShellExecuteA(g_sdata.hwnd,"open",NSIS_DL_URL,NULL,NULL,SW_SHOWNORMAL);
     }
   }
-  else MessageBoxA(g_sdata.hwnd,"There is no update available for NSIS at this time.","NSIS Update",MB_OK|MB_ICONINFORMATION);
+  else MessageBoxA(g_sdata.hwnd,"目前还没有可用的NSIS更新版本","NSIS更新",MB_OK|MB_ICONINFORMATION);
   GlobalFree(response);
   delete get;
   EnableMenuItem(g_sdata.menu,IDM_NSISUPDATE,MF_ENABLED);
@@ -141,13 +141,13 @@ void Update() {
   DWORD dwThreadId;
 
 #ifdef _UNICODE
-  MessageBox(g_sdata.hwnd, _T("Please check http://www.scratchpaper.com or the forums for updates."), _T("NSIS Update"), MB_OK|MB_ICONSTOP);
+  MessageBox(g_sdata.hwnd, _T("请检测http://www.scratchpaper.com或论坛看有无更新。"), _T("NSIS更新"), MB_OK|MB_ICONSTOP);
   return;
 #endif
 
   if (my_strstr(g_sdata.brandingv, _T("cvs")))
   {
-    MessageBox(g_sdata.hwnd,_T("Cannot check for new version of nightly builds.  To update, download a new nightly build."),_T("NSIS Update"),MB_OK|MB_ICONSTOP);
+    MessageBox(g_sdata.hwnd,_T("无法检测每日构建版（测试版）的新版本。要更新，请下载新的每日构建版（测试版）。"),_T("NSIS更新"),MB_OK|MB_ICONSTOP);
     return;
   }
   

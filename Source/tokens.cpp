@@ -367,11 +367,11 @@ void CEXEBuild::print_help(TCHAR *commandname)
 
     if (iter != tokenMap.end())
     {
-      ERROR_MSG(_T("Usage: %s %s\n"), iter->second->name, iter->second->usage_str);
+      ERROR_MSG(_T("用法: %s %s\n"), iter->second->name, iter->second->usage_str);
     }
     else
     {
-      ERROR_MSG(_T("Invalid command \"%s\"\n"),commandname);
+      ERROR_MSG(_T("非法命令\"%s\"\n"),commandname);
     }
   }
 }
@@ -435,13 +435,13 @@ int CEXEBuild::IsTokenPlacedRight(int pos, TCHAR *tok)
   else {
     TCHAR err[1024];
     if (cp == TP_SEC) {
-      _tcscpy(err, _T("Error: command %s not valid in Section\n"));
+      _tcscpy(err, _T("错误：区段（Section）中出现非法命令【%s】\n"));
     }
     else if (cp == TP_FUNC) {
-      _tcscpy(err, _T("Error: command %s not valid in Function\n"));
+      _tcscpy(err, _T("错误：函数（Function）中出现非法命令【%s】\n"));
     }
     else if (cp == TP_PAGEEX) {
-      _tcscpy(err, _T("Error: command %s not valid in PageEx\n"));
+      _tcscpy(err, _T("错误：扩展页面（PageEx）中出现非法命令【%s】\n"));
     }
     else
     {

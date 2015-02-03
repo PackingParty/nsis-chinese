@@ -28,7 +28,7 @@
 #  define REALSTR(x) WIDEN2(#x)
 #  define STR(x) REALSTR(x)
 #  ifdef RELEASE
-     const wchar_t *NSISW_VERSION = L"MakeNSISW " STR(RELEASE) L" (Unicode NSIS Compiler Interface)";
+     const wchar_t *NSISW_VERSION = L"MakeNSISW " STR(RELEASE) L" (Unicode版本的NSIS编译器界面)";
 #  else
      const wchar_t *NSISW_VERSION = L"MakeNSISW " WIDEN(__DATE__) L" (Unicode)";
 #  endif
@@ -36,7 +36,7 @@
 #  define REALSTR(x) #x
 #  define STR(x) REALSTR(x)
 #  ifdef RELEASE
-     const char *NSISW_VERSION = "MakeNSISW " STR(RELEASE) " (NSIS Compiler Interface)";
+     const char *NSISW_VERSION = "MakeNSISW " STR(RELEASE) " (NSIS编译器界面)";
 #  else
      const char *NSISW_VERSION = "MakeNSISW " __DATE__;
 #  endif

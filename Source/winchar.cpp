@@ -28,12 +28,12 @@ WCHAR *winchar_fromansi(const char* s, unsigned int codepage/*=CP_ACP*/)
 {
   int l = MultiByteToWideChar(codepage, 0, s, -1, 0, 0);
   if (l == 0)
-    throw runtime_error("Unicode conversion failed");
+    throw runtime_error("转Unicode字符失败");
 
   WCHAR *ws = new WCHAR[l + 1];
 
   if (MultiByteToWideChar(codepage, 0, s, -1, ws, l + 1) == 0)
-    throw runtime_error("Unicode conversion failed");
+    throw runtime_error("转Unicode字符失败");
 
   return ws;
 }
@@ -42,12 +42,12 @@ char *winchar_toansi(const WCHAR* ws, unsigned int codepage/*=CP_ACP*/)
 {
   int l = WideCharToMultiByte(codepage, 0, ws, -1, 0, 0, 0, 0);
   if (l == 0)
-    throw runtime_error("Unicode conversion failed");
+    throw runtime_error("转Unicode字符失败");
 
   char *s = new char[l + 1];
 
   if (WideCharToMultiByte(codepage, 0, ws, -1, s, l + 1, 0, 0) == 0)
-    throw runtime_error("Unicode conversion failed");
+    throw runtime_error("转Unicode字符失败");
 
   return s;
 }

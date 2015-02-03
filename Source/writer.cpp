@@ -113,7 +113,7 @@ void file_writer_sink::write_data(const void *data, const size_t size)
 {
   if (fwrite(data, 1, size, m_fp) != size)
   {
-    throw std::runtime_error("error writing");
+    throw std::runtime_error("写入数据时出错");
   }
 }
 

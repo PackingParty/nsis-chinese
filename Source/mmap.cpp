@@ -222,7 +222,7 @@ void MMapFile::resize(int newsize)
       extern void quit(); extern int g_display_errors;
       if (g_display_errors)
       {
-        _ftprintf(g_output,_T("\nInternal compiler error #12345: error creating mmap the size of %d.\n"), m_iSize);
+        _ftprintf(g_output,_T("\n内部编译器错误#12345：在创建大小为%d的内存映射文件对象时出错。\n"), m_iSize);
         fflush(g_output);
       }
       quit();
@@ -282,7 +282,7 @@ void *MMapFile::get(int offset, int *sizep) const
     extern void quit(); extern int g_display_errors;
     if (g_display_errors) 
     {
-      _ftprintf(g_output,_T("\nInternal compiler error #12345: error mmapping datablock to %d.\n"), size);
+      _ftprintf(g_output,_T("\n内部编译器错误#12345：在映射大小为%d的数据块时出错。\n"), size);
       fflush(g_output);
     }
     quit();

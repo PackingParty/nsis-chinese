@@ -176,7 +176,7 @@ void NSISCALL myDelete(TCHAR *buf, int flags)
           }
           else
           {
-            log_printf2(_T("Delete: DeleteFile(\"%s\")"),buf);
+            log_printf2(_T("Delete: 删除文件(\"%s\")"),buf);
             remove_ro_attr(buf);
             if (!DeleteFile(buf))
             {

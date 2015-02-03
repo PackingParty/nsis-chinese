@@ -58,13 +58,13 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, TCHAR *cmdParam, int 
 #endif  
 
   if (!InitBranding()) {
-    MessageBox(0,NSISERROR,_T("Error"),MB_ICONEXCLAMATION|MB_OK);
+    MessageBox(0,NSISERROR,_T("错误"),MB_ICONEXCLAMATION|MB_OK);
     return 1;
   }
   ResetObjects();
   HWND hDialog = CreateDialog(g_sdata.hInstance,MAKEINTRESOURCE(DLG_MAIN),0,DialogProc);
   if (!hDialog) {
-    MessageBox(0,DLGERROR,_T("Error"),MB_ICONEXCLAMATION|MB_OK);
+    MessageBox(0,DLGERROR,_T("错误"),MB_ICONEXCLAMATION|MB_OK);
     return 1;
   }
   haccel = LoadAccelerators(g_sdata.hInstance, MAKEINTRESOURCE(IDK_ACCEL));
@@ -263,7 +263,7 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
           CompileNSISScript();
         }
       } else {
-        MessageBox(hwndDlg,MULTIDROPERROR,_T("Error"),MB_OK|MB_ICONSTOP);
+        MessageBox(hwndDlg,MULTIDROPERROR,_T("错误"),MB_OK|MB_ICONSTOP);
       }
       DragFinish((HDROP)wParam);
       break;
@@ -394,16 +394,16 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
       if (!g_sdata.retcode) {
         MessageBeep(MB_ICONASTERISK);
         if (g_sdata.warnings)
-          SetTitle(g_sdata.hwnd,_T("Finished with Warnings"));
+          SetTitle(g_sdata.hwnd,_T("完成，但有警告"));
         else
-          SetTitle(g_sdata.hwnd,_T("Finished Sucessfully"));
+          SetTitle(g_sdata.hwnd,_T("已成功完成"));
         // Added by Darren Owen (DrO) on 1/10/2003
         if(g_sdata.recompile_test)
           PostMessage(g_sdata.hwnd, WM_COMMAND, LOWORD(IDC_TEST), 0);
       }
       else {
         MessageBeep(MB_ICONEXCLAMATION);
-        SetTitle(g_sdata.hwnd,_T("Compile Error: See Log for Details"));
+        SetTitle(g_sdata.hwnd,_T("编译错误：详情请查看日志"));
       }
 
       // Added by Darren Owen (DrO) on 1/10/2003
@@ -529,10 +529,10 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
             OPENFILENAME l={sizeof(l),};
             TCHAR buf[MAX_PATH];
             l.hwndOwner = hwndDlg;
-            l.lpstrFilter = _T("NSIS Script (*.nsi)\0*.nsi\0All Files (*.*)\0*.*\0");
+            l.lpstrFilter = _T("NSIS脚本(*.nsi)\0*.nsi\0所有文件(*.*)\0*.*\0");
             l.lpstrFile = buf;
             l.nMaxFile = MAX_STRING-1;
-            l.lpstrTitle = _T("Load Script");
+            l.lpstrTitle = _T("载入脚本");
             l.lpstrDefExt = _T("log");
             l.lpstrFileTitle = NULL;
             l.lpstrInitialDir = NULL;
@@ -636,10 +636,10 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam) {
           OPENFILENAME l={sizeof(l),};
           TCHAR buf[MAX_STRING];
           l.hwndOwner = hwndDlg;
-          l.lpstrFilter = _T("Log Files (*.log)\0*.log\0Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0");
+          l.lpstrFilter = _T("日志文件(*.log)\0*.log\0文本文件(*.txt)\0*.txt\0所有文件(*.*)\0*.*\0");
           l.lpstrFile = buf;
           l.nMaxFile = MAX_STRING-1;
-          l.lpstrTitle = _T("Save Output");
+          l.lpstrTitle = _T("保存输出");
           l.lpstrDefExt = _T("log");
           l.lpstrInitialDir = NULL;
           l.Flags = OFN_HIDEREADONLY|OFN_EXPLORER|OFN_PATHMUSTEXIST;
@@ -725,12 +725,12 @@ DWORD WINAPI MakeNSISProc(LPVOID p) {
   else sa.lpSecurityDescriptor = NULL;
   sa.bInheritHandle = true;
   if (!CreatePipe(&read_stdout,&newstdout,&sa,0)) {
-    ErrorMessage(g_sdata.hwnd,_T("There was an error creating the output pipe."));
+    ErrorMessage(g_sdata.hwnd,_T("创建输出管道时出错。"));
     PostMessage(g_sdata.hwnd,WM_MAKENSIS_PROCESSCOMPLETE,0,0);
     return 1;
   }
   if (!CreatePipe(&read_stdin,&newstdin,&sa,0)) {
-    ErrorMessage(g_sdata.hwnd,_T("There was an error creating the input pipe."));
+    ErrorMessage(g_sdata.hwnd,_T("创建输入管道时出错。"));
     PostMessage(g_sdata.hwnd,WM_MAKENSIS_PROCESSCOMPLETE,0,0);
     return 1;
   }
@@ -742,7 +742,7 @@ DWORD WINAPI MakeNSISProc(LPVOID p) {
   si.hStdInput = newstdin;
   if (!CreateProcess(NULL,g_sdata.compile_command,NULL,NULL,TRUE,CREATE_NEW_CONSOLE,NULL,NULL,&si,&pi)) {
     TCHAR buf[MAX_STRING];
-    wsprintf(buf,_T("Could not execute:\r\n %s."),g_sdata.compile_command);
+    wsprintf(buf,_T("无法执行：\r\n %s."),g_sdata.compile_command);
     ErrorMessage(g_sdata.hwnd,buf);
     CloseHandle(newstdout);
     CloseHandle(read_stdout);
@@ -1013,7 +1013,7 @@ BOOL CALLBACK SettingsProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
             TCHAR *buf = (TCHAR *)GlobalAlloc(GPTR, (n+1)*sizeof(TCHAR));
             SendDlgItemMessage(hwndDlg, IDC_SYMBOL, WM_GETTEXT, n+1, (LPARAM)buf);
             if(my_strstr(buf,_T(" ")) || my_strstr(buf,_T("\t"))) {
-              MessageBox(hwndDlg,SYMBOLSERROR,_T("Error"),MB_OK|MB_ICONSTOP);
+              MessageBox(hwndDlg,SYMBOLSERROR,_T("错误"),MB_OK|MB_ICONSTOP);
               GlobalFree(buf);
               break;
             }

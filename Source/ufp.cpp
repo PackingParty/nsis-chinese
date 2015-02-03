@@ -84,7 +84,7 @@ CharType getChar(FILE* fp, bool isLE)
          int c = fgetc(fp);
          if (c == EOF)
          {
-            throw "getCharHelper: premature end of file.";
+            throw "getCharHelper：过早的文件结尾。";
          }
          rval |= ((CharType)c) << (8 * count);
          ++count;
@@ -99,7 +99,7 @@ CharType getChar(FILE* fp, bool isLE)
          int c = fgetc(fp);
          if (c == EOF)
          {
-            throw "getCharHelper: premature end of file.";
+            throw "getCharHelper： 过早的文件结尾。";
          }
          rval |= ((CharType)c) << (8 * count);
          --count;

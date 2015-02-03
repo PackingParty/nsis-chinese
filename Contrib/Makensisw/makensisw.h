@@ -37,16 +37,16 @@
 #define NSIS_FOR     "http://forums.winamp.com/forumdisplay.php?forumid=65"
 #define NSIS_UPDATE  "http://nsis.sourceforge.net/update.php?version="
 #define NSIS_DL_URL  "http://nsis.sourceforge.net/download/"
-#define USAGE        _T("Usage:\r\n\r\n - File | Load Script...\r\n - Drag the .nsi file into this window\r\n - Right click the .nsi file and choose \"Compile NSIS Script\"")
+#define USAGE        _T("ÓÃ·¨£º\r\n\r\n - ÎÄ¼þ | ÔØÈë½Å±¾...\r\n - °Ñ.nsiÎÄ¼þÍÏµ½´Ë´°¿Ú\r\n - ÔÚ.nsiÎÄ¼þÉÏÓÒ»÷È»ºóÑ¡Ôñ¡°±àÒëNSIS½Å±¾¡±")
 #define COPYRIGHT    _T("Copyright © 2002 Robert Rainwater")
 #define CONTRIB      _T("Fritz Elfert, Justin Frankel, Amir Szekely, Sunil Kamath, Joost Verburg, (Unicode) Jim Park")
 #define DOCPATH      "http://nsis.sourceforge.net/Docs/"
 #define LOCALDOCS    _T("\\NSIS.chm")
-#define NSISERROR    _T("Unable to intialize MakeNSIS.  Please verify that makensis.exe is in the same directory as makensisw.exe.")
-#define DLGERROR     _T("Unable to intialize MakeNSISW.")
-#define SYMBOLSERROR _T("Symbol cannot contain whitespace characters")
-#define MULTIDROPERROR _T("Dropping more than one script at a time is not supported")
-#define NSISUPDATEPROMPT _T("Running NSIS Update will close MakeNSISW.\nContinue?")
+#define NSISERROR    _T("ÎÞ·¨³õÊ¼»¯MakeNSIS£¬Çë²é¿´makensis.exeÊÇ·ñºÍmakensisw.exeÔÚÍ¬Ò»Ä¿Â¼ÖÐ¡£")
+#define DLGERROR     _T("ÎÞ·¨³õÊ¼»¯MakeNSISW¡£")
+#define SYMBOLSERROR _T("·ûºÅ²»ÄÜº¬ÓÐ¿Õ°××Ö·û")
+#define MULTIDROPERROR _T("ÍÏÈë¶à¸ö½Å±¾Ä¿Ç°»¹²»Ö§³Ö")
+#define NSISUPDATEPROMPT _T("ÔËÐÐNSIS¸üÐÂ½«»á¹Ø±ÕMakeNSISW\nÊÇ·ñ¼ÌÐø£¿")
 #define REGSEC       HKEY_CURRENT_USER
 #define REGSECDEF    HKEY_LOCAL_MACHINE
 #define REGKEY       _T("Software\\NSIS")
@@ -60,17 +60,17 @@
 #define TIMEOUT      100
 #define MINWIDTH     350
 #define MINHEIGHT    180
-#define COMPRESSOR_MESSAGE _T("\n\nThe %s compressor created the smallest installer (%d bytes).")
-#define RESTORED_COMPRESSOR_MESSAGE _T("\n\nThe %s compressor created the smallest installer (%d bytes).")
-#define EXE_HEADER_COMPRESSOR_STAT _T("EXE header size:")
-#define TOTAL_SIZE_COMPRESSOR_STAT _T("Total size:")
+#define COMPRESSOR_MESSAGE _T("\n\n%sÑ¹ËõÆ÷´´½¨ÁË×îÐ¡°²×°°ü£¨%d×Ö½Ú£©¡£")
+#define RESTORED_COMPRESSOR_MESSAGE _T("\n\n\%sÑ¹ËõÆ÷´´½¨ÁË×îÐ¡°²×°°ü£¨%d×Ö½Ú£©¡£")
+#define EXE_HEADER_COMPRESSOR_STAT _T("EXEÍ·²¿´óÐ¡:")
+#define TOTAL_SIZE_COMPRESSOR_STAT _T("È«²¿´óÐ¡:")
 #define SYMBOL_SET_NAME_MAXLEN 40
-#define LOAD_SYMBOL_SET_DLG_NAME _T("Load Symbol Definitions Set")
-#define SAVE_SYMBOL_SET_DLG_NAME _T("Save Symbol Definitions Set")
-#define LOAD_BUTTON_TEXT _T("Load")
-#define SAVE_BUTTON_TEXT _T("Save")
-#define LOAD_SYMBOL_SET_MESSAGE _T("Please select a name for the Symbol Definitions Set to load.")
-#define SAVE_SYMBOL_SET_MESSAGE _T("Please enter or select a name for the Symbol Definitions Set to save.")
+#define LOAD_SYMBOL_SET_DLG_NAME _T("ÔØÈë·ûºÅ¶¨ÒåÉèÖÃ")
+#define SAVE_SYMBOL_SET_DLG_NAME _T("±£´æ·ûºÅ¶¨ÒåÉèÖÃ")
+#define LOAD_BUTTON_TEXT _T("ÔØÈë")
+#define SAVE_BUTTON_TEXT _T("±£´æ")
+#define LOAD_SYMBOL_SET_MESSAGE _T("ÇëÑ¡ÔñÒªÔØÈëµÄ·ûºÅ¶¨ÒåÉèÖÃÃû³Æ¡£")
+#define SAVE_SYMBOL_SET_MESSAGE _T("Çë¼üÈë»òÑ¡ÔñÒª±£´æµÄ·ûºÅ¶¨ÒåÉèÖÃÃû³Æ¡£")
 
 #define WM_MAKENSIS_PROCESSCOMPLETE (WM_USER+1001)
 #define WM_MAKENSIS_LOADSYMBOLSET (WM_USER+1002)
@@ -104,14 +104,14 @@ TCHAR *compressor_names[] = {_T(""),
                             _T("lzma"),
                             _T("/SOLID lzma"),
                             _T("Best")};
-TCHAR *compressor_display_names[] = {_T("Defined in Script/Compiler Default"),
+TCHAR *compressor_display_names[] = {_T("½Å±¾¶¨Òå/±àÒëÆ÷Ä¬ÈÏ"),
                             _T("ZLIB"),
-                            _T("ZLIB (solid)"),
+                            _T("ZLIB (¹ÌÊµ)"),
                             _T("BZIP2"),
-                            _T("BZIP2 (solid)"),
+                            _T("BZIP2 (¹ÌÊµ)"),
                             _T("LZMA"),
-                            _T("LZMA (solid)"),
-                            _T("Best Compressor")};
+                            _T("LZMA (¹ÌÊµ)"),
+                            _T("×î¼ÑÑ¹ËõÆ÷")};
 WORD compressor_commands[] = {IDM_COMPRESSOR_SCRIPT,
                               IDM_ZLIB,
                               IDM_ZLIB_SOLID,
