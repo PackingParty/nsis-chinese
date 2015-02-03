@@ -1,17 +1,17 @@
-target = 'Dialer'
+﻿target = 'Dialer'
 
 files = Split("""
-	dialer.c
+    dialer.c
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	wininet
+    kernel32
+    user32
+    wininet
 """)
 
 docs = Split("""
-	Dialer.txt
+    Dialer.txt
 """)
 
 Import('BuildPlugin')

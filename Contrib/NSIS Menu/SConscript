@@ -1,4 +1,4 @@
-target = "NSIS"
+﻿target = "NSIS"
 Import('BuildUtil env')
 
 files = Split("""

@@ -1,13 +1,13 @@
-target = 'TypeLib'
+﻿target = 'TypeLib'
 
 files = Split("""
-	TypeLib.cpp
+    TypeLib.cpp
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	oleaut32
+    kernel32
+    user32
+    oleaut32
 """)
 
 Import('BuildPlugin')

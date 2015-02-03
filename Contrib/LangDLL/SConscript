@@ -1,17 +1,17 @@
-target = 'LangDLL'
+﻿target = 'LangDLL'
 
 files = Split("""
-	LangDLL.c
+    LangDLL.c
 """)
 
 resources = Split("""
-	resource.rc
+    resource.rc
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	gdi32
+    kernel32
+    user32
+    gdi32
 """)
 
 Import('BuildPlugin')

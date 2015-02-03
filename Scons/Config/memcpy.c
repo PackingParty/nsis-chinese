@@ -1,4 +1,4 @@
-#include <stdlib.h> // for size_t
+﻿#include <stdlib.h> // for size_t
 void *memcpy(void *out, const void *in, size_t len)
 {
   char *c_out=(char*)out;

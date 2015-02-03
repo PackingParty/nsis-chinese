@@ -1,13 +1,15 @@
+﻿# This Python file uses the following encoding: utf-8
+
 Import('defenv')
 
-### Configuration options
+### 配置选项，这些主要是在输入了scons --help时会显示出来
 
 cfg = Variables()
 
 cfg.Add(
   (
     'NSIS_MAX_STRLEN',
-    'defines the maximum string length for internal variables and stack entries. 1024 should be plenty, but if you are doing crazy registry stuff, you might want to bump it up. Generally it adds about 16-32x the memory, so setting this to 4096 from 1024 will add around 64k of memory usage (not really a big deal, but not usually needed).',
+    '定义内置变量和堆栈的最大字符串长度，1024应该都足够了，但如果你的字符串确实超长的，你可能想要修改了。通常这会添加16-32位的内存，因此从1024设置成4096将会增加64KB内存',
     1024
   )
 )
@@ -15,7 +17,7 @@ cfg.Add(
 cfg.Add(
   (
     'NSIS_MAX_INST_TYPES',
-    'defines the maximum install types. Note that this should not exceed 32, ever.',
+    '定义最大安装类型，注意不要超过32！！',
     32
   )
 )
@@ -23,7 +25,7 @@ cfg.Add(
 cfg.Add(
   (
     'NSIS_DEFAULT_LANG',
-    'defines the default language id NSIS will use if nothing else is defined in the script. Default value is 1033 which is English.',
+    '定义NSIS使用的默认语言ID，默认值是1033即英语，中文则是2052',
     1033
   )
 )
@@ -31,7 +33,7 @@ cfg.Add(
 cfg.Add(
   (
     'NSIS_VARS_SECTION',
-    'defines the name of the PE section containing the runtime variables',
+    '定义包含有运行时变量即内置变量（如$0，$1）信息的PE节的名称，默认值是.ndata',
     '.ndata'
   )
 )
@@ -39,7 +41,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_UNINSTALL_SUPPORT',
-    "enables the uninstaller support. Turn it off if your installers don't need uninstallers. Adds less than 1kb.",
+    "是否启用卸载功能支持，如果你的安装程序不需要卸载可以关闭它，添加的小于1KB",
     'yes'
   )
 )
@@ -47,7 +49,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_LICENSEPAGE',
-    'enables support for the installer to present a license page.',
+    '是否启用协议页面的支持',
     'yes'
   )
 )
@@ -55,7 +57,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_COMPONENTPAGE',
-    'enables support for the installer to present a page where you can select what sections are installed. with this disabled, all sections are installed by default',
+    '是否启用安装包可出现一个你可以选择安装什么区段的页面（组件页）的支持，如果禁用了此选项，那么所有区段都被默认安装。',
     'yes'
   )
 )
@@ -63,7 +65,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_COMPONENTPAGE_ALTERNATIVE',
-    'enables an alternative components page behavior. Checkboxes will only be toggled when clicking on the checkbox itself and not on its label. .onMouseOverSection will only be called when the user selects the component and not when moving the mouse pointer over it.',
+    '启用一个可选/备选的组件页行为。仅在点击复选框本身时切换勾选/不勾选，而不是点击复选框上的文本时切换勾选/不勾选。.onMouseOverSection函数仅在用户选择组件时被调用，而不是在鼠标悬停时被调用。',
     'no'
   )
 )
@@ -71,7 +73,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_SILENT_SUPPORT',
-    'enables support for making installers that are completely silent.',
+    '是否支持生成完全静默的安装包',
     'yes'
   )
 )
@@ -79,7 +81,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_VISIBLE_SUPPORT',
-    'enables support for making installers that are visible.',
+    '是否支持生成具体可视界面的安装包',
     'yes'
   )
 )
@@ -87,7 +89,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_ENHANCEDUI_SUPPORT',
-    'enables support for CreateFont, SetCtlColors (used by some UIs), SetBrandingImage, .onGUIInit, etc.',
+    '是否启用CreateFont, SetCtlColors, SetBrandingImage, .onGUIInit等命令的支持',
     'yes'
   )
 )
@@ -95,7 +97,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_COMPRESSION_SUPPORT',
-    'enables support for making installers that use compression (recommended).',
+    '是否启用压缩生成的安装包文件的支持（推荐）',
     'yes'
   )
 )
@@ -103,7 +105,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_COMPRESS_BZIP2_SMALLMODE',
-    "if defined, bzip2's decompressor uses bzip2's alternative decompression method that uses less runtime memory, at the expense of speed (and executable size). not recommended.",
+    "如果定义了此选项，bzip2在解压缩时使用bzip2的可选/备选的解压方式，这样可以减少运行时的内存使用，但这牺牲了速度（还有文件大小），不推荐",
     'no'
   )
 )
@@ -111,7 +113,7 @@ cfg.Add(
 cfg.Add(
   (
     'NSIS_COMPRESS_BZIP2_LEVEL',
-    'bzip2 compression window size. 1-9 is valid. 9 uses the most memory, but typically compresses best (recommended). 1 uses the least memory, but typically compresses the worst.',
+    'bzip2压缩窗口大小，1-9是合法的。9的话使用内存最多，但是这压缩的会更好些（推荐），1的话使用内存最小，但压缩的就没那么好了',
     9
   )
 )
@@ -120,7 +122,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_CRC_SUPPORT',
-    'enables support for installer verification. HIGHLY recommended.',
+    '是否启用安装包CRC检测，极力推荐！',
     'yes'
   )
 )
@@ -128,7 +130,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_CRC_ANAL',
-    'makes the CRC verification extremely careful, meaning extra bytes on the end of file, or the first 512 bytes changing, will give error. Enable this if you are paranoid, otherwise leaving it off seems safe (and is less prone to reporting virii). If you will be digitally signing your installers, leave this off.',
+    '让CRC检测功能特别小心，这也意味着在文件末尾多了一些字节码，或者前面的512字节有变化时会提示出错！如果你是妄想症患者那就启用它吧！ 否则关闭这个比较安全。如果你要对安装包打数字签名，那么最好关闭它',
     'no'
   )
 )
@@ -136,7 +138,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_LOG',
-    'enables the logging facility. turning this on (by uncommenting it) adds about 4kb, but can be useful in debugging your installers.',
+    '是否启用日志功能支持，打开这个选项会增加4KB大小，但是对于调试安装来说这很有用！',
     'no'
   )
 )
@@ -144,7 +146,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_LOG_ODS',
-    'makes the logging facility use OutputDebugString instead of a file.',
+    '让日志使用OutputDebugString输出而不是文件！',
     'no'
   )
 )
@@ -152,23 +154,23 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_LOG_STDOUT',
-    'makes the logging facility use stdout instead of a file.',
+    '让日志输出到stdout而不是文件中！',
     'no'
   )
 )
 
 cfg.Add(
-	BoolVariable(
-		'NSIS_CONFIG_LOG_TIMESTAMP',
-		'adds a timestamp to each log line.',
-		'no'
-	)
+    BoolVariable(
+    'NSIS_CONFIG_LOG_TIMESTAMP',
+    '是否在日志文件的每行添加时间戳',
+    'no'
+    )
 )
 
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_BGBG',
-    'enables support for the blue (well, whatever color you want) gradient background window.',
+    '是否启用蓝色（好吧，任何颜色都可以）渐变的背景窗口支持',
     'yes'
   )
 )
@@ -176,7 +178,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_CODECALLBACKS',
-    'enables support for installer code callbacks. recommended, as it uses a minimum of space and allows for neat functionality.',
+    '是否启用安装包代码回调功能，推荐！',
     'yes'
   )
 )
@@ -184,17 +186,17 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_MOVEONREBOOT',
-    'enables support for uninstallers that automatically delete themselves from the temp directory, as well as the reboot moving/deleting modes of Delete and Rename. Adds about 512 gay bytes..',
+    '是否启用卸载程序自删除功能（临时目录下）, 还有重启后重命名或删除文件功能',
     'yes'
   )
 )
 
-### Instruction enabling configuration
+### 指令/命令启用配置项
 
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_ACTIVEXREG',
-    'enables activeX plug-in registration and deregistration, as well as CallInstDLL',
+    '是否启用activeX插件的注册和反注册支持，还有CallInstDLL',
     'yes'
   )
 )
@@ -202,7 +204,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_INTOPTS',
-    'enables support for IntCmp, IntCmpU, IntOp, and IntFmt.',
+    '是否启用IntCmp, IntCmpU, IntOp, 和IntFmt命令支持',
     'yes'
   )
 )
@@ -210,7 +212,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_STROPTS',
-    'enables support for StrCmp, StrCpy, and StrLen, as well as Get*Local.',
+    '是否启用StrCmp, StrCpy, 和StrLen, 还有Get*Local命令支持',
     'yes'
   )
 )
@@ -218,7 +220,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_STACK',
-    'enables support for the stack (Push, Pop, Exch)',
+    '是否启用堆栈操作的支持(Push, Pop, Exch)',
     'yes'
   )
 )
@@ -226,7 +228,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_FILEFUNCTIONS',
-    'enables support for FileOpen,FileClose, FileSeek, FileRead, and FileWrite.',
+    '是否启用FileOpen,FileClose, FileSeek, FileRead, 和FileWrite命令支持',
     'yes'
   )
 )
@@ -234,7 +236,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_FINDFIRST',
-    'enables support for FindFirst, FindNext, and FindClose.',
+    '是否启用FindFirst, FindNext, 和FindClose命令支持',
     'yes'
   )
 )
@@ -242,7 +244,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_CREATESHORTCUT',
-    'enables support for CreateShortCut.',
+    '是否启用CreateShortCut命令支持',
     'yes'
   )
 )
@@ -250,7 +252,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_INIFILES',
-    'enables support for ReadINIStr and WriteINIStr.',
+    '是否启用ReadINIStr和WriteINIStr命令支持',
     'yes'
   )
 )
@@ -258,7 +260,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_REGISTRYFUNCTIONS',
-    'enables support for ReadRegStr, ReadRegDWORD, WriteRegStr, etc etc etc.',
+    '是否启用ReadRegStr, ReadRegDWORD, WriteRegStr等命令支持',
     'yes'
   )
 )
@@ -266,7 +268,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_COPYFILES',
-    'enables support for CopyFiles',
+    '是否启用CopyFiles命令支持',
     'yes'
   )
 )
@@ -274,7 +276,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_REBOOT',
-    'enables support for Reboot, IfRebootFlag, SetRebootFlag',
+    '是否启用Reboot, IfRebootFlag, SetRebootFlag命令支持',
     'yes'
   )
 )
@@ -282,7 +284,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_FNUTIL',
-    'enables support for GetFullPathName, GetTempFileName, and SearchPath',
+    '是否启用GetFullPathName, GetTempFileName, 和SearchPath命令支持',
     'yes'
   )
 )
@@ -290,7 +292,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_EXECUTE',
-    'enables support for Exec and ExecWait',
+    '是否启用Exec和ExecWait命令支持',
     'yes'
   )
 )
@@ -298,7 +300,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_SHELLEXECUTE',
-    'enables support for ExecShell',
+    '是否启用ExecShell命令支持',
     'yes'
   )
 )
@@ -306,7 +308,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_GETDLLVERSION',
-    'enables support for GetDLLVersion',
+    '是否启用GetDLLVersion命令支持',
     'yes'
   )
 )
@@ -314,7 +316,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_GETFILETIME',
-    'enables support for GetFileTime',
+    '是否启用GetFileTime命令支持',
     'yes'
   )
 )
@@ -322,7 +324,7 @@ cfg.Add(
 cfg.Add(
    BoolVariable(
     'NSIS_SUPPORT_GETFONTVERSION',
-    'enables support for GetFontversion',
+    '是否启用GetFontversion命令支持',
     'yes'
   )
 )
@@ -330,7 +332,7 @@ cfg.Add(
 cfg.Add(
    BoolVariable(
     'NSIS_SUPPORT_GETFONTNAME',
-    'enables support for GetFontName',
+    '是否启用GetFontName命令支持',
     'yes'
   )
 )
@@ -338,7 +340,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_HWNDS',
-    'enables support for FindWindow, SendMessage, and IsWindow',
+    '是否启用FindWindow, SendMessage, 和IsWindow命令支持',
     'yes'
   )
 )
@@ -346,7 +348,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_ENVIRONMENT',
-    'enables support for ReadEnvStr and ExpandEnvStrings',
+    '是否启用ReadEnvStr和ExpandEnvStrings命令支持',
     'yes'
   )
 )
@@ -354,7 +356,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_RMDIR',
-    'enables support for RMDir',
+    '是否启用RMDir命令支持',
     'yes'
   )
 )
@@ -362,7 +364,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_FILE',
-    'enables support for File (extracting files)',
+    '是否启用File命令支持（解压文件）',
     'yes'
   )
 )
@@ -370,7 +372,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_DELETE',
-    'enables support for Delete (delete files)',
+    '是否启用Delete命令支持（删除文件）',
     'yes'
   )
 )
@@ -378,7 +380,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_RENAME',
-    'enables support for Rename (rename files)',
+    '是否启用Rename命令支持（重命名文件）',
     'yes'
   )
 )
@@ -386,7 +388,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_MESSAGEBOX',
-    'enables support for MessageBox',
+    '是否启用MessageBox支持',
     'yes'
   )
 )
@@ -394,7 +396,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_VERSION_INFO',
-    'enables support for version information in the installer',
+    '是否启用安装包版本信息支持',
     'yes'
   )
 )
@@ -402,7 +404,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_FIX_DEFINES_IN_STRINGS',
-    'fixes defines inside defines and handles chars $ perfectly',
+    '修正定义里的定义（如${DEFINE1${DEFINE2}}），更好地处理$字符',
     'no'
   )
 )
@@ -410,7 +412,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_SUPPORT_STANDARD_PREDEFINES',
-    'enables standard predefines - __FILE__, __LINE__, __DATE__, __TIME__ and __TIMESTAMP__',
+    '是否启用标准预定义：__FILE__, __LINE__, __DATE__, __TIME__ 和 __TIMESTAMP__',
     'yes'
   )
 )
@@ -418,7 +420,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_LOCKWINDOW_SUPPORT',
-    'enables the LockWindow command',
+    '是否启用LockWindow命令支持',
     'yes'
   )
 )
@@ -426,7 +428,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_PLUGIN_SUPPORT',
-    'enables installer plug-ins support',
+    '是否启用插件命令支持',
     'yes'
   )
 )
@@ -434,7 +436,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_FIX_COMMENT_HANDLING',
-    'fixes comment handling',
+    '修正注释处理',
     'yes'
   )
 )
@@ -442,7 +444,7 @@ cfg.Add(
 cfg.Add(
   BoolVariable(
     'NSIS_CONFIG_CONST_DATA_PATH',
-    'determines if plugins, includes, stubs etc. are located in a constant path set at build-time',
+    '决定plugins, includes, stubs是否定位为常量路径',
     defenv['PLATFORM'] != 'win32'
   )
 )

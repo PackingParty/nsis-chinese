@@ -1,4 +1,4 @@
-target = 'nsDialogs'
+﻿target = 'nsDialogs'
 
 files = Split("""
    browse.c

@@ -1,31 +1,31 @@
-target = 'VPatch'
+﻿target = 'VPatch'
 
 docs = Split("""
-	Readme.html
+    Readme.html
 """)
 
 Import('defenv')
 
 if defenv['UNICODE']:
-	examples = Split("""
-		Unicode/example.nsi
-		newfile.txt
-		oldfile.txt
-		patch.pat
-	""")
-	includes = Split("""
-		Unicode/VPatchLib.nsh
-	""")
+    examples = Split("""
+        Unicode/example.nsi
+        newfile.txt
+        oldfile.txt
+        patch.pat
+    """)
+    includes = Split("""
+        Unicode/VPatchLib.nsh
+    """)
 else:
-	examples = Split("""
-		ANSI/example.nsi
-		newfile.txt
-		oldfile.txt
-		patch.pat
-	""")
-	includes = Split("""
-		ANSI/VPatchLib.nsh
-	""")
+    examples = Split("""
+        ANSI/example.nsi
+        newfile.txt
+        oldfile.txt
+        patch.pat
+    """)
+    includes = Split("""
+        ANSI/VPatchLib.nsh
+    """)
 
 defenv.DistributeExamples(examples, path=target)
 defenv.DistributeDocs(docs, path=target)

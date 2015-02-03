@@ -1,4 +1,4 @@
-"""SCons.Tool.gcc
+﻿"""SCons.Tool.gcc
 
 Tool-specific initialization for MinGW (http://www.mingw.org/)
 

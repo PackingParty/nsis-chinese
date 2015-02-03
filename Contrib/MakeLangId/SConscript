@@ -1,21 +1,21 @@
-target = "MakeLangId"
+﻿target = "MakeLangId"
 
 files = Split("""
-	MakeLangId.cpp
+    MakeLangId.cpp
 """)
 
 res = Split("""
-	resource.rc
+    resource.rc
 """)
 
 resources = Split("""
-	MakeLangId.xml
+    MakeLangId.xml
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	comctl32
+    kernel32
+    user32
+    comctl32
 """)
 
 Import('BuildUtil')

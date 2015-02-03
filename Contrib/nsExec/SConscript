@@ -1,29 +1,29 @@
-target = 'nsExec'
+﻿target = 'nsExec'
 
 files = Split("""
-	nsexec.c
+    nsexec.c
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	advapi32
+    kernel32
+    user32
+    advapi32
 """)
 
 docs = Split("""
-	nsExec.txt
+    nsExec.txt
 """)
 
 Import('BuildPlugin env')
 
 if env['UNICODE']:
-	examples = Split("""
-		Unicode/test.nsi
-	""")
+    examples = Split("""
+        Unicode/test.nsi
+    """)
 else:
-	examples = Split("""
-		ANSI/test.nsi
-	""")
+    examples = Split("""
+        ANSI/test.nsi
+    """)
 
 BuildPlugin(target, files, libs, examples, docs)
 

@@ -1,29 +1,29 @@
-target = 'AdvSplash'
+﻿target = 'AdvSplash'
 
 files = Split("""
-	advsplash.c
+    advsplash.c
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	gdi32
-	winmm
+    kernel32
+    user32
+    gdi32
+    winmm
 """)
 
 Import('BuildPlugin env')
 
 if env['UNICODE']:
-	examples = Split("""
-		Unicode/Example.nsi
-	""")
+    examples = Split("""
+        Unicode/Example.nsi
+    """)
 else:
-	examples = Split("""
-		ANSI/Example.nsi
-	""")
+    examples = Split("""
+        ANSI/Example.nsi
+    """)
 
 docs = Split("""
-	advsplash.txt
+    advsplash.txt
 """)
 
 BuildPlugin(target, files, libs, examples, docs)

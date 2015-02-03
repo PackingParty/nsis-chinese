@@ -1,29 +1,29 @@
-target = 'BgImage'
+﻿target = 'BgImage'
 
 files = Split("""
-	BgImage.cpp
+    BgImage.cpp
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	gdi32
-	winmm
+    kernel32
+    user32
+    gdi32
+    winmm
 """)
 
 docs = Split("""
-	BgImage.txt
+    BgImage.txt
 """)
 
 Import('BuildPlugin env')
 
 if env['UNICODE']:
-	examples = Split("""
-		Unicode/Example.nsi
-	""")
+    examples = Split("""
+        Unicode/Example.nsi
+    """)
 else:
-	examples = Split("""
-		ANSI/Example.nsi
-	""")
+    examples = Split("""
+        ANSI/Example.nsi
+    """)
 
 BuildPlugin(target, files, libs, examples, docs)

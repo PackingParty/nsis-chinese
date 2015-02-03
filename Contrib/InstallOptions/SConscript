@@ -1,64 +1,64 @@
-target = 'InstallOptions'
+﻿target = 'InstallOptions'
 
 files = Split("""
-	InstallerOptions.cpp
+    InstallerOptions.cpp
 """)
 
 resources = Split("""
-	ioptdll.rc
+    ioptdll.rc
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	gdi32
-	shell32
-	comdlg32
-	ole32
+    kernel32
+    user32
+    gdi32
+    shell32
+    comdlg32
+    ole32
 """)
 
 examples = Split("""
-	test.nsi
-	test.ini
-	testimgs.nsi
-	testimgs.ini
-	testlink.nsi
-	testlink.ini
-	testnotify.nsi
-	testnotify.ini
+    test.nsi
+    test.ini
+    testimgs.nsi
+    testimgs.ini
+    testlink.nsi
+    testlink.ini
+    testnotify.nsi
+    testnotify.ini
 """)
 
 docs = Split("""
-	Changelog.txt
-	Readme.html
+    Changelog.txt
+    Readme.html
 """)
 
 includes = Split("""
-	InstallOptions.nsh
+    InstallOptions.nsh
 """)
 
 Import('BuildPlugin env')
 
 if env['UNICODE']:
-	temp = []
-	for x in examples:
-		temp.append('Unicode/' + x)
-	examples = temp
+    temp = []
+    for x in examples:
+        temp.append('Unicode/' + x)
+    examples = temp
 
-	temp = []
-	for x in includes:
-		temp.append('Unicode/' + x)
-	includes = temp
+    temp = []
+    for x in includes:
+        temp.append('Unicode/' + x)
+    includes = temp
 else:
-	temp = []
-	for x in examples:
-		temp.append('ANSI/' + x)
-	examples = temp
+    temp = []
+    for x in examples:
+        temp.append('ANSI/' + x)
+    examples = temp
 
-	temp = []
-	for x in includes:
-		temp.append('ANSI/' + x)
-	includes = temp
+    temp = []
+    for x in includes:
+        temp.append('ANSI/' + x)
+    includes = temp
 
 BuildPlugin(target, files, libs, examples, docs, res = resources)
 env.DistributeInclude(includes)

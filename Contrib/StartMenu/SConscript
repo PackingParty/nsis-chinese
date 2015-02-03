@@ -1,34 +1,34 @@
-target = 'StartMenu'
+﻿target = 'StartMenu'
 
 files = Split("""
-	StartMenu.c
+    StartMenu.c
 """)
 
 resources = Split("""
-	StartMenu.rc
+    StartMenu.rc
 """)
 
 libs = Split("""
-	kernel32
-	user32
-	gdi32
-	shell32
-	ole32
+    kernel32
+    user32
+    gdi32
+    shell32
+    ole32
 """)
 
 docs = Split("""
-	Readme.txt
+    Readme.txt
 """)
 
 Import('BuildPlugin env')
 
 if env['UNICODE']:
-	examples = Split("""
-		Unicode/Example.nsi
-	""")
+    examples = Split("""
+        Unicode/Example.nsi
+    """)
 else:
-	examples = Split("""
-		ANSI/Example.nsi
-	""")
+    examples = Split("""
+        ANSI/Example.nsi
+    """)
 
 BuildPlugin(target, files, libs, examples, docs, res = resources)
