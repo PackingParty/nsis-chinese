@@ -1,15 +1,15 @@
 ﻿/*
  * util.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -23,7 +23,7 @@
 #include "config.h"
 #include <shlobj.h>
 
-extern TCHAR ps_tmpbuf[NSIS_MAX_STRLEN*2];
+extern TCHAR ps_tmpbuf[NSIS_MAX_STRLEN * 2];
 TCHAR * NSISCALL GetNSISString(TCHAR *outbuf, int strtab);
 #define GetNSISStringTT(strtab) GetNSISString(0, (strtab))
 #define GetNSISStringNP(strtab) ((const TCHAR *)g_blocks[NB_STRINGS].offset+(strtab))
@@ -110,15 +110,15 @@ void NSISCALL mini_memcpy(void *out, const void *in, int len);
 void NSISCALL remove_ro_attr(TCHAR *file);
 
 enum myGetProcAddressFunctions {
-  MGA_GetDiskFreeSpaceEx,
-  MGA_MoveFileEx,
-  MGA_RegDeleteKeyEx,
-  MGA_OpenProcessToken,
-  MGA_LookupPrivilegeValue,
-  MGA_AdjustTokenPrivileges,
-  MGA_GetUserDefaultUILanguage,
-  MGA_SHAutoComplete,
-  MGA_SHGetFolderPath
+    MGA_GetDiskFreeSpaceEx,
+    MGA_MoveFileEx,
+    MGA_RegDeleteKeyEx,
+    MGA_OpenProcessToken,
+    MGA_LookupPrivilegeValue,
+    MGA_AdjustTokenPrivileges,
+    MGA_GetUserDefaultUILanguage,
+    MGA_SHAutoComplete,
+    MGA_SHGetFolderPath
 };
 
 void * NSISCALL myGetProcAddress(const enum myGetProcAddressFunctions func);

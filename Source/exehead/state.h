@@ -1,15 +1,15 @@
 ﻿/*
  * fileform.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -33,11 +33,11 @@ extern NSIS_STRING g_usrvars[1];
 #define state_exe_file            g_usrvars[28]
 #define state_click_next          g_usrvars[30]
 
-extern TCHAR g_caption[NSIS_MAX_STRLEN*2];
+extern TCHAR g_caption[NSIS_MAX_STRLEN * 2];
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
 extern HWND g_hwnd;
 extern HANDLE g_hInstance;
-extern HWND insthwnd,insthwndbutton;
+extern HWND insthwnd, insthwndbutton;
 #else
 #define g_hwnd 0
 #define g_hInstance 0

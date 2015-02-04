@@ -1,15 +1,15 @@
 ﻿/*
  * util.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -36,7 +36,7 @@ extern void dopause(void);
 
 // Adds the bitmap in filename using resource editor re as id id.
 // If width or height are specified it will also make sure the bitmap is in that size
-int update_bitmap(CResourceEditor* re, WORD id, const TCHAR* filename, int width=0, int height=0, int maxbpp=0);
+int update_bitmap(CResourceEditor* re, WORD id, const TCHAR* filename, int width = 0, int height = 0, int maxbpp = 0);
 
 size_t my_strftime(TCHAR *s, size_t max, const TCHAR  *fmt, const struct tm *tm);
 
@@ -88,7 +88,7 @@ FILE *my_fopen(const TCHAR *path, const TCHAR *mode);
 // assumption: T is an int type
 template <class T>
 inline T align_to_512(const T x) {
-  return (x+511) & ~511;
+    return (x + 511) & ~511;
 }
 
 // ================
@@ -112,14 +112,14 @@ public:
 template <typename _RESOURCE, typename _FREE_RESOURCE>
 class ResourceManager : public BaseResourceManager {
 public:
-  ResourceManager(_RESOURCE& resource) : m_resource(resource) {}
-  virtual ~ResourceManager() { m_free_resource(m_resource); };
+    ResourceManager(_RESOURCE& resource) : m_resource(resource) {}
+    virtual ~ResourceManager() { m_free_resource(m_resource); };
 private: // members
-  _RESOURCE& m_resource;
-  _FREE_RESOURCE m_free_resource;
+    _RESOURCE& m_resource;
+    _FREE_RESOURCE m_free_resource;
 private: // don't copy instances
-  ResourceManager(const ResourceManager&);
-  void operator=(const ResourceManager&);
+    ResourceManager(const ResourceManager&);
+    void operator=(const ResourceManager&);
 };
 
 #define RM_MANGLE_FREEFUNC(freefunc) \

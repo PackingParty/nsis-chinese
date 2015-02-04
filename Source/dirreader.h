@@ -1,15 +1,15 @@
 ﻿/*
  * dirreader.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -23,35 +23,35 @@
 class dir_reader {
 public:
 
-  typedef std::set<tstring>::const_iterator iterator;
+    typedef std::set<tstring>::const_iterator iterator;
 
-  dir_reader();
-  virtual ~dir_reader() {}
+    dir_reader();
+    virtual ~dir_reader() {}
 
-  virtual void read(const tstring& dir) = 0;
+    virtual void read(const tstring& dir) = 0;
 
-  virtual const std::set<tstring>& files();
-  virtual const std::set<tstring>& dirs();
+    virtual const std::set<tstring>& files();
+    virtual const std::set<tstring>& dirs();
 
-  virtual void exclude(const tstring& spec);
-  virtual void exclude(const std::set<tstring>& specs);
+    virtual void exclude(const tstring& spec);
+    virtual void exclude(const std::set<tstring>& specs);
 
-  static bool matches(const tstring& name, const tstring& spec);
+    static bool matches(const tstring& name, const tstring& spec);
 
 protected:
 
-  virtual void add_file(const tstring& file);
-  virtual void add_dir(const tstring& dir);
+    virtual void add_file(const tstring& file);
+    virtual void add_dir(const tstring& dir);
 
-  virtual bool is_excluded(const tstring& name) const;
+    virtual bool is_excluded(const tstring& name) const;
 
 private:
 
-  std::set<tstring> m_excluded;
-  std::set<tstring> m_wildcard_excluded;
+    std::set<tstring> m_excluded;
+    std::set<tstring> m_wildcard_excluded;
 
-  std::set<tstring> m_files;
-  std::set<tstring> m_dirs;
+    std::set<tstring> m_files;
+    std::set<tstring> m_dirs;
 
 };
 

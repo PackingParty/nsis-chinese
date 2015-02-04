@@ -19,23 +19,23 @@
 // anonymous namespace
 namespace
 {
-    struct CUTF8BytesToFollow
-    {
-        unsigned char m_rShift;
-        unsigned char m_result;
-        unsigned char m_bytesToFollow;
-    };
+struct CUTF8BytesToFollow
+{
+    unsigned char m_rShift;
+    unsigned char m_result;
+    unsigned char m_bytesToFollow;
+};
 
-    const CUTF8BytesToFollow g_utf8BytesToFollow[] =
-    {
-         /* r-shift, result, length */
-        { 7,  0x0, 0},
-        { 5,  0x6, 1},
-        { 4,  0xe, 2},
-        { 3, 0x1e, 3},
-        { 2, 0x3e, 4},
-        { 1, 0x7e, 5}
-    };
+const CUTF8BytesToFollow g_utf8BytesToFollow[] =
+{
+    /* r-shift, result, length */
+    { 7, 0x0, 0 },
+    { 5, 0x6, 1 },
+    { 4, 0xe, 2 },
+    { 3, 0x1e, 3 },
+    { 2, 0x3e, 4 },
+    { 1, 0x7e, 5 }
+};
 };
 
 bool CValidateUnicode::ValidateUTF8(unsigned char* buf, size_t characters)
@@ -77,7 +77,7 @@ bool CValidateUnicode::ValidateUTF8(unsigned char* buf, size_t characters)
 int CValidateUnicode::GetBytesToFollow(unsigned char ch)
 {
     int result = -1;
-    for (int i = 0; i < sizeof(g_utf8BytesToFollow)/sizeof(CUTF8BytesToFollow); ++i)
+    for (int i = 0; i < sizeof(g_utf8BytesToFollow) / sizeof(CUTF8BytesToFollow); ++i)
     {
         if (ch >> g_utf8BytesToFollow[i].m_rShift == g_utf8BytesToFollow[i].m_result)
         {
@@ -92,16 +92,16 @@ bool CValidateUnicode::ValidateUTF16LE(unsigned char* buf, size_t bytes)
 {
     // We need to make sure the endianness matches the processor.
     // Intel x86 is little endian.
-    return ValidateUTF16((unsigned short*)(buf), bytes/2);
+    return ValidateUTF16((unsigned short*)(buf), bytes / 2);
 }
 
 bool CValidateUnicode::ValidateUTF16BE(unsigned char* buf, size_t bytes)
 {
-    std::vector<unsigned short> correctedBuf(bytes/2);
+    std::vector<unsigned short> correctedBuf(bytes / 2);
 
     for (size_t i = 0; i < bytes; i += 2)
     {
-        correctedBuf[i/2] = buf[i] << 8 | buf[i+1];
+        correctedBuf[i / 2] = buf[i] << 8 | buf[i + 1];
     }
 
     return ValidateUTF16(&correctedBuf[0], correctedBuf.size());
@@ -130,23 +130,23 @@ bool CValidateUnicode::ValidateUTF16(unsigned short* buf, size_t characters)
             }
             // Invalid surrogate pairs found?
             else if ((ch == 0xd83f ||
-                         ch == 0xd87f ||
-                         ch == 0xd8bf ||
-                         ch == 0xd8ff ||
-                         ch == 0xd93f ||
-                         ch == 0xd97f ||
-                         ch == 0xd9bf ||
-                         ch == 0xd9ff ||
-                         ch == 0xda3f ||
-                         ch == 0xdA7f ||
-                         ch == 0xdabf ||
-                         ch == 0xdaff ||
-                         ch == 0xdb3f ||
-                         ch == 0xdb7f ||
-                         ch == 0xdbbf ||
-                         ch == 0xdbff)
-                        &&
-                        (trailing == 0xdffe || trailing == 0xdfff))
+                ch == 0xd87f ||
+                ch == 0xd8bf ||
+                ch == 0xd8ff ||
+                ch == 0xd93f ||
+                ch == 0xd97f ||
+                ch == 0xd9bf ||
+                ch == 0xd9ff ||
+                ch == 0xda3f ||
+                ch == 0xdA7f ||
+                ch == 0xdabf ||
+                ch == 0xdaff ||
+                ch == 0xdb3f ||
+                ch == 0xdb7f ||
+                ch == 0xdbbf ||
+                ch == 0xdbff)
+                &&
+                (trailing == 0xdffe || trailing == 0xdfff))
             {
                 valid = false;
             }
@@ -158,13 +158,13 @@ bool CValidateUnicode::ValidateUTF16(unsigned short* buf, size_t characters)
         }
         // Invalid values
         else if (ch == 0xfffe || ch == 0xffff ||
-                   (ch >= 0xfdd0 && ch <= 0xfdef))
+            (ch >= 0xfdd0 && ch <= 0xfdef))
         {
             valid = false;
         }
 
         ++buf;
-       --characters;
+        --characters;
     }
 
     return valid;
@@ -187,25 +187,25 @@ CValidateUnicode::FILE_TYPE CValidateUnicode::CheckBOM(
             result = UTF_16BE;
         }
         else if (bytes >= 3 &&
-                    buf[0] == 0xef &&
-                    buf[1] == 0xbb &&
-                    buf[2] == 0xbf)
+            buf[0] == 0xef &&
+            buf[1] == 0xbb &&
+            buf[2] == 0xbf)
         {
             result = UTF_8;
         }
         else if (bytes >= 4)
         {
             if (buf[0] == 0 &&
-                 buf[1] == 0 &&
-                 buf[2] == 0xfe &&
-                 buf[3] == 0xff)
+                buf[1] == 0 &&
+                buf[2] == 0xfe &&
+                buf[3] == 0xff)
             {
                 result = UTF_32BE;
             }
             else if (buf[0] == 0xff &&
-                       buf[1] == 0xfe &&
-                        buf[2] == 0 &&
-                        buf[3] == 0)
+                buf[1] == 0xfe &&
+                buf[2] == 0 &&
+                buf[3] == 0)
             {
                 result = UTF_32LE;
             }

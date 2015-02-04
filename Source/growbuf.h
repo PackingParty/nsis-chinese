@@ -1,15 +1,15 @@
 ﻿/*
  * growbuf.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -25,7 +25,7 @@
  */
 class IGrowBuf
 {
-  public:
+public:
     virtual ~IGrowBuf() {}
 
     /**
@@ -34,25 +34,25 @@ class IGrowBuf
      * @param len Size of the data in bytes.
      * @return the previous logical size in bytes before the addition.
      */
-    virtual int add(const void *data, int len)=0;
+    virtual int add(const void *data, int len) = 0;
 
     /**
      * Resizes the buffer to hold the number of bytes specified.
      * @param newlen the desired logical size of the buffer.
      */
-    virtual void resize(int newlen)=0;
+    virtual void resize(int newlen) = 0;
 
     /**
      * Get the length of the logical buffer in bytes.
      * @return the length in bytes
      */
-    virtual int getlen() const=0;
+    virtual int getlen() const = 0;
 
     /**
      * Get the buffer itself.
      * @return Void pointer to the buffer.
      */
-    virtual void *get() const=0;
+    virtual void *get() const = 0;
 };
 
 /**
@@ -60,11 +60,11 @@ class IGrowBuf
  */
 class GrowBuf : public IGrowBuf
 {
-  private: // don't copy instances
+private: // don't copy instances
     GrowBuf(const GrowBuf&);
     void operator=(const GrowBuf&);
 
-  public:
+public:
     GrowBuf();
     virtual ~GrowBuf();
 
@@ -103,13 +103,13 @@ class GrowBuf : public IGrowBuf
      */
     void *get() const;
 
-  private:
+private:
     void *m_s;    /* the storage buffer */
     int m_alloc;  /* allocated bytes */
     int m_used;   /* how many bytes of the buffer is used? */
     int m_zero;   /* should storage be zeroed out? */
 
-  protected:
+protected:
     int m_bs;     // byte-size to grow by
 };
 
@@ -118,8 +118,8 @@ class GrowBuf : public IGrowBuf
  * in tiny increments.
  */
 class TinyGrowBuf : public GrowBuf {
-  public:
-    TinyGrowBuf() : GrowBuf() { m_bs=1024; }
+public:
+    TinyGrowBuf() : GrowBuf() { m_bs = 1024; }
 };
 
 #endif

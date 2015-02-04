@@ -1,15 +1,15 @@
 ﻿/*
  * icon.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  */
@@ -25,39 +25,39 @@
 
 typedef struct
 {
-  WORD wReserved;
-  WORD wIsIcon;
-  WORD wCount;
+    WORD wReserved;
+    WORD wIsIcon;
+    WORD wCount;
 } IconGroupHeader;
 
 typedef struct
 {
-  BYTE bWidth;
-  BYTE bHeight;
-  BYTE bPaletteEntries;
-  BYTE bReserved;
-  WORD wPlanes;
-  WORD wBitsPerPixel;
-  DWORD dwRawSize;
+    BYTE bWidth;
+    BYTE bHeight;
+    BYTE bPaletteEntries;
+    BYTE bReserved;
+    WORD wPlanes;
+    WORD wBitsPerPixel;
+    DWORD dwRawSize;
 } IconGroupEntry;
 
 typedef struct
 {
-  IconGroupEntry header;
-  DWORD dwImageOffset;
+    IconGroupEntry header;
+    DWORD dwImageOffset;
 } FileIconGroupEntry;
 
 typedef struct
 {
-  IconGroupEntry header;
-  WORD wRsrcId;
+    IconGroupEntry header;
+    WORD wRsrcId;
 } RsrcIconGroupEntry;
 
 typedef struct
 {
-  unsigned index;
-  IconGroupEntry meta;
-  LPBYTE data;
+    unsigned index;
+    IconGroupEntry meta;
+    LPBYTE data;
 } Icon;
 
 typedef std::vector<Icon> IconGroup;

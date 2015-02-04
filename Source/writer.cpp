@@ -1,15 +1,15 @@
 ﻿/*
  * writer.cpp
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -27,94 +27,94 @@
 
 void writer_sink::write_byte(const unsigned char b)
 {
-  write_data(&b, 1);
+    write_data(&b, 1);
 }
 
 void writer_sink::write_short(const short s)
 {
-  short fs = FIX_ENDIAN_INT16(s);
-  write_data(&fs, sizeof(short));
+    short fs = FIX_ENDIAN_INT16(s);
+    write_data(&fs, sizeof(short));
 }
 
 void writer_sink::write_int(const int i)
 {
-  int fi = FIX_ENDIAN_INT32(i);
-  write_data(&fi, sizeof(int));
+    int fi = FIX_ENDIAN_INT32(i);
+    write_data(&fi, sizeof(int));
 }
 
 void writer_sink::write_int_array(const int i[], const size_t len)
 {
-  for (size_t l = 0; l < len; l++)
-  {
-    write_int(i[l]);
-  }
+    for (size_t l = 0; l < len; l++)
+    {
+        write_int(i[l]);
+    }
 }
 
 #ifdef _UNICODE
 void writer_sink::write_string(const TCHAR *s)
 {
-  TCHAR ch;
+    TCHAR ch;
 
-  while ((ch = *s++) != 0)
-  {
-    this->write_short((short) ch);
-  }
-  this->write_short(0);
+    while ((ch = *s++) != 0)
+    {
+        this->write_short((short)ch);
+    }
+    this->write_short(0);
 }
 
 // size in this case is the length of the string to write.
 void writer_sink::write_string(const TCHAR *s, const size_t size)
 {
-  size_t i = 0;
-  bool strEnd = false;
-  TCHAR ch;
+    size_t i = 0;
+    bool strEnd = false;
+    TCHAR ch;
 
-  while (i++ < size)
-  {
-    ch = s[i];
-    if (ch == _T('\0'))
+    while (i++ < size)
     {
-       strEnd = true;
+        ch = s[i];
+        if (ch == _T('\0'))
+        {
+            strEnd = true;
+        }
+
+        if (strEnd) { ch = _T('\0'); }
+
+        this->write_short((short)ch);
     }
-
-    if (strEnd) { ch = _T('\0'); }
-
-    this->write_short((short) ch);
-  }
 }
 #else
 void writer_sink::write_string(const char *s)
 {
-  write_data(s, strlen(s) + 1);
+    write_data(s, strlen(s) + 1);
 }
 
 // size in this case is the length of the string to write.
 void writer_sink::write_string(const char *s, const size_t size)
 {
-  char *wb = new char[size];
-  memset(wb, 0, size);
-  strncpy(wb, s, size);
-  write_data(wb, size);
-  delete [] wb;
+    char *wb = new char[size];
+    memset(wb, 0, size);
+    strncpy(wb, s, size);
+    write_data(wb, size);
+    delete[] wb;
 }
 #endif
 
 void writer_sink::write_growbuf(const IGrowBuf *b)
 {
-  write_data(b->get(), b->getlen());
+    write_data(b->get(), b->getlen());
 }
 
 void growbuf_writer_sink::write_data(const void *data, const size_t size)
 {
-  m_buf->add(data, size);
+    m_buf->add(data, size);
 }
 
 void file_writer_sink::write_data(const void *data, const size_t size)
 {
-  if (fwrite(data, 1, size, m_fp) != size)
-  {
-    throw std::runtime_error("写入数据时出错");
-  }
+    if (fwrite(data, 1, size, m_fp) != size)
+    {
+        throw std::runtime_error("写入数据时出错");
+    }
 }
 
 #ifdef NSIS_CONFIG_CRC_SUPPORT
@@ -122,6 +122,6 @@ void file_writer_sink::write_data(const void *data, const size_t size)
 
 void crc_writer_sink::write_data(const void *data, const size_t size)
 {
-  *m_crc = CRC32(*m_crc, (const unsigned char *) data, size);
+    *m_crc = CRC32(*m_crc, (const unsigned char *)data, size);
 }
 #endif

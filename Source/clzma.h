@@ -1,15 +1,15 @@
 ﻿/*
  * clzma.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -37,69 +37,69 @@
 #define LZMA_IO_ERROR -4
 #define LZMA_MEM_ERROR -5
 
-class CLZMA:
-  public ICompressor,
-  public ISequentialInStream,
-  public ISequentialOutStream,
-  public CMyUnknownImp
+class CLZMA :
+    public ICompressor,
+    public ISequentialInStream,
+    public ISequentialOutStream,
+    public CMyUnknownImp
 {
 private:
-  NCompress::NLZMA::CEncoder *_encoder;
+    NCompress::NLZMA::CEncoder *_encoder;
 
 #ifdef _WIN32
-  HANDLE hCompressionThread;
+    HANDLE hCompressionThread;
 #else
-  pthread_t hCompressionThread;
+    pthread_t hCompressionThread;
 #endif
-  HANDLE hNeedIOEvent;
-  HANDLE hIOReadyEvent;
+    HANDLE hNeedIOEvent;
+    HANDLE hIOReadyEvent;
 
-  BYTE *next_in; /* next input byte */
-  UINT avail_in; /* number of bytes available at next_in */
+    BYTE *next_in; /* next input byte */
+    UINT avail_in; /* number of bytes available at next_in */
 
-  BYTE *next_out; /* next output byte should be put there */
-  UINT avail_out; /* remaining free space at next_out */
+    BYTE *next_out; /* next output byte should be put there */
+    UINT avail_out; /* remaining free space at next_out */
 
-  int res;
+    int res;
 
-  BOOL finish;
-  BOOL compressor_finished;
+    BOOL finish;
+    BOOL compressor_finished;
 
-  int ConvertError(HRESULT result);
+    int ConvertError(HRESULT result);
 
-  void GetMoreIO();
-  int CompressReal();
+    void GetMoreIO();
+    int CompressReal();
 
 #ifdef _WIN32
-  static DWORD WINAPI lzmaCompressThread(LPVOID lpParameter);
+    static DWORD WINAPI lzmaCompressThread(LPVOID lpParameter);
 #else
-  static void* lzmaCompressThread(void *lpParameter);
+    static void* lzmaCompressThread(void *lpParameter);
 #endif
 
 public:
-  MY_UNKNOWN_IMP
+    MY_UNKNOWN_IMP
 
-  CLZMA();
-  virtual ~CLZMA();
+        CLZMA();
+    virtual ~CLZMA();
 
-  virtual int Init(int level, unsigned int dicSize);
-  virtual int End();
-  virtual int Compress(bool flush);
+    virtual int Init(int level, unsigned int dicSize);
+    virtual int End();
+    virtual int Compress(bool flush);
 
-  STDMETHOD(Read)(void *data, UINT32 size, UINT32 *processedSize);
-  STDMETHOD(ReadPart)(void *data, UINT32 size, UINT32 *processedSize);
-  STDMETHOD(Write)(const void *data, UINT32 size, UINT32 *processedSize);
-  STDMETHOD(WritePart)(const void *data, UINT32 size, UINT32 *processedSize);
+    STDMETHOD(Read)(void *data, UINT32 size, UINT32 *processedSize);
+    STDMETHOD(ReadPart)(void *data, UINT32 size, UINT32 *processedSize);
+    STDMETHOD(Write)(const void *data, UINT32 size, UINT32 *processedSize);
+    STDMETHOD(WritePart)(const void *data, UINT32 size, UINT32 *processedSize);
 
-  virtual void SetNextIn(char *in, unsigned int size);
-  virtual void SetNextOut(char *out, unsigned int size);
+    virtual void SetNextIn(char *in, unsigned int size);
+    virtual void SetNextOut(char *out, unsigned int size);
 
-  virtual char *GetNextOut();
-  virtual unsigned int GetAvailIn();
-  virtual unsigned int GetAvailOut();
-  virtual const TCHAR *GetName();
+    virtual char *GetNextOut();
+    virtual unsigned int GetAvailIn();
+    virtual unsigned int GetAvailOut();
+    virtual const TCHAR *GetName();
 
-  virtual const TCHAR* GetErrStr(int err);
+    virtual const TCHAR* GetErrStr(int err);
 };
 
 #endif

@@ -1,15 +1,15 @@
 ﻿/*
  * mmap.h
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -29,27 +29,27 @@
 
 class IMMap
 {
-  public:
-    virtual void resize(int newlen)=0;
-    virtual int  getsize() const=0;
-    virtual void *get(int offset, int size) const=0;
-    virtual void *get(int offset, int *size) const=0;
-    virtual void *getmore(int offset, int size) const=0;
-    virtual void release()=0;
-    virtual void release(void *view, int size)=0;
-    virtual void clear()=0;
-    virtual void setro(BOOL bRO)=0;
-    virtual void flush(int num)=0;
+public:
+    virtual void resize(int newlen) = 0;
+    virtual int  getsize() const = 0;
+    virtual void *get(int offset, int size) const = 0;
+    virtual void *get(int offset, int *size) const = 0;
+    virtual void *getmore(int offset, int size) const = 0;
+    virtual void release() = 0;
+    virtual void release(void *view, int size) = 0;
+    virtual void clear() = 0;
+    virtual void setro(BOOL bRO) = 0;
+    virtual void flush(int num) = 0;
     virtual ~IMMap() {}
 };
 
 class MMapFile : public IMMap
 {
-  private: // don't copy instances
+private: // don't copy instances
     MMapFile(const MMapFile&);
     void operator=(const MMapFile&);
 
-  public:
+public:
     MMapFile();
     virtual ~MMapFile();
 
@@ -81,14 +81,14 @@ class MMapFile : public IMMap
     int  setfile(int hFile, DWORD dwSize);
 #endif
 
-   /**
-    * Resize the memory mapping of the file.  Used when the filesize has
-    * changed.  When setfile has not been called previously, then it will
-    * create a temporary file and use it to create a memory map.  This is
-    * what's used by MMapBuf to create a Memory Mapped Buffer.
-    * 
-    * @param newsize The new size of the file.  Limited to 32-bits.
-    */
+    /**
+     * Resize the memory mapping of the file.  Used when the filesize has
+     * changed.  When setfile has not been called previously, then it will
+     * create a temporary file and use it to create a memory map.  This is
+     * what's used by MMapBuf to create a Memory Mapped Buffer.
+     *
+     * @param newsize The new size of the file.  Limited to 32-bits.
+     */
     void resize(int newsize);
 
     /**
@@ -100,7 +100,7 @@ class MMapFile : public IMMap
      * Set the memory map to a particular offset in the file and return the
      * memory mapped pointer to it.  Internally it may have to align to a
      * certain page size.
-     * 
+     *
      * @param offset The offset from the beginning of the file.
      * @param size The size of the memory map window.
      */
@@ -110,7 +110,7 @@ class MMapFile : public IMMap
      * Set the memory map to a particular offset in the file and return the
      * memory mapped pointer to it.  Internally it may have to align to a
      * certain page size.
-     * 
+     *
      * @param offset The offset from the beginning of the file.
      * @param sizep [in/out] The size of the memory map window.  (In non-Win32
      * systems, the new size is written back out.)
@@ -157,7 +157,7 @@ class MMapFile : public IMMap
      */
     void flush(int num);
 
-  private:
+private:
 #ifdef _WIN32
     HANDLE m_hFile, m_hFileMap;
 #else
@@ -175,10 +175,10 @@ class MMapFile : public IMMap
 
 class MMapFake : public IMMap
 {
-  private: // don't copy instances
+private: // don't copy instances
     MMapFake(const MMapFake&);
     void operator=(const MMapFake&);
-  public:
+public:
     MMapFake();
 
     void set(const char *pMem, int iSize);
@@ -194,7 +194,7 @@ class MMapFake : public IMMap
     void setro(BOOL b);
     void flush(BOOL b);
 
-  private:
+private:
     const char *m_pMem;
     int m_iSize;
 };
@@ -210,11 +210,11 @@ class MMapFake : public IMMap
  */
 class MMapBuf : public IGrowBuf, public IMMap
 {
-  private: // don't copy instances
+private: // don't copy instances
     MMapBuf(const MMapBuf&);
     void operator=(const MMapBuf&);
 
-  public:
+public:
     MMapBuf();
     virtual ~MMapBuf();
 
@@ -232,7 +232,7 @@ class MMapBuf : public IGrowBuf, public IMMap
     void clear();
     void flush(int num);
 
-  private:
+private:
     GrowBuf m_gb;
     MMapFile m_fm;
 

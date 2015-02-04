@@ -1,15 +1,15 @@
 ﻿/*
  * fileform.c
- * 
+ *
  * This file is a part of NSIS.
- * 
+ *
  * Copyright (C) 1999-2009 Nullsoft and Contributors
- * 
+ *
  * Licensed under the zlib/libpng license (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  * Licence details can be found in the file COPYING.
- * 
+ *
  * This software is provided 'as-is', without any express or implied
  * warranty.
  *
@@ -61,10 +61,10 @@ int g_flags;
 int g_filehdrsize;
 int g_is_uninstaller;
 
-HANDLE g_db_hFile=INVALID_HANDLE_VALUE;
+HANDLE g_db_hFile = INVALID_HANDLE_VALUE;
 
 #if defined(NSIS_CONFIG_COMPRESSION_SUPPORT) && defined(NSIS_COMPRESS_WHOLE)
-HANDLE dbd_hFile=INVALID_HANDLE_VALUE;
+HANDLE dbd_hFile = INVALID_HANDLE_VALUE;
 static int dbd_size, dbd_pos, dbd_srcpos, dbd_fulllen;
 #endif//NSIS_COMPRESS_WHOLE
 
@@ -75,7 +75,7 @@ static int m_pos;
 #ifdef NSIS_COMPRESS_WHOLE
 static int NSISCALL calc_percent()
 {
-  return _calc_percent();
+    return _calc_percent();
 }
 #else
 #define calc_percent() _calc_percent()
@@ -85,71 +85,71 @@ static int NSISCALL calc_percent()
 #if defined(NSIS_CONFIG_CRC_SUPPORT) || defined(NSIS_COMPRESS_WHOLE)
 BOOL CALLBACK verProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-  if (uMsg == WM_INITDIALOG)
-  {
-    SetTimer(hwndDlg,1,250,NULL);
-    uMsg = WM_TIMER;
-  }
-  if (uMsg == WM_TIMER)
-  {
-    TCHAR bt[64];
-    int percent=calc_percent();
+    if (uMsg == WM_INITDIALOG)
+    {
+        SetTimer(hwndDlg, 1, 250, NULL);
+        uMsg = WM_TIMER;
+    }
+    if (uMsg == WM_TIMER)
+    {
+        TCHAR bt[64];
+        int percent = calc_percent();
 #ifdef NSIS_COMPRESS_WHOLE
-    TCHAR *msg=g_header?_LANG_UNPACKING:_LANG_VERIFYINGINST;
+        TCHAR *msg = g_header ? _LANG_UNPACKING : _LANG_VERIFYINGINST;
 #else
-    TCHAR *msg=_LANG_VERIFYINGINST;
+        TCHAR *msg = _LANG_VERIFYINGINST;
 #endif
 
-    wsprintf(bt,msg,percent);
+        wsprintf(bt, msg, percent);
 
-    my_SetWindowText(hwndDlg,bt);
-    my_SetDialogItemText(hwndDlg,IDC_STR,bt);
-  }
-  return 0;
+        my_SetWindowText(hwndDlg, bt);
+        my_SetDialogItemText(hwndDlg, IDC_STR, bt);
+    }
+    return 0;
 }
 
 DWORD verify_time;
 
 void handle_ver_dlg(BOOL kill)
 {
-  static HWND hwnd;
+    static HWND hwnd;
 
-  if (kill)
-  {
-    if (hwnd) DestroyWindow(hwnd);
-    hwnd = NULL;
+    if (kill)
+    {
+        if (hwnd) DestroyWindow(hwnd);
+        hwnd = NULL;
 
-    return;
-  }
+        return;
+    }
 
-  if (hwnd)
-  {
-    MessageLoop(0);
-  }
-  else if (GetTickCount() > verify_time)
-  {
+    if (hwnd)
+    {
+        MessageLoop(0);
+    }
+    else if (GetTickCount() > verify_time)
+    {
 #ifdef NSIS_COMPRESS_WHOLE
-    if (g_hwnd)
-    {
-      if (g_exec_flags.status_update & 1)
-      {
-        TCHAR bt[64];
-        wsprintf(bt, _T("... %d%%"), calc_percent());
-        update_status_text(0, bt);
-      }
-    }
-    else
+        if (g_hwnd)
+        {
+            if (g_exec_flags.status_update & 1)
+            {
+                TCHAR bt[64];
+                wsprintf(bt, _T("... %d%%"), calc_percent());
+                update_status_text(0, bt);
+            }
+        }
+        else
 #endif
-    {
-      hwnd = CreateDialog(
-        g_hInstance,
-        MAKEINTRESOURCE(IDD_VERIFY),
-        0,
-        verProc
-      );
-      ShowWindow(hwnd, SW_SHOW);
+        {
+            hwnd = CreateDialog(
+                g_hInstance,
+                MAKEINTRESOURCE(IDD_VERIFY),
+                0,
+                verProc
+                );
+            ShowWindow(hwnd, SW_SHOW);
+        }
     }
-  }
 }
 
 #endif//NSIS_CONFIG_CRC_SUPPORT || NSIS_COMPRESS_WHOLE
@@ -161,185 +161,185 @@ static z_stream g_inflate_stream;
 
 const TCHAR * NSISCALL loadHeaders(int cl_flags)
 {
-  int left;
+    int left;
 #ifdef NSIS_CONFIG_CRC_SUPPORT
-  crc32_t crc = 0;
-  int do_crc = 0;
+    crc32_t crc = 0;
+    int do_crc = 0;
 #endif//NSIS_CONFIG_CRC_SUPPORT
 
-  void *data;
-  firstheader h;
-  header *header;
+    void *data;
+    firstheader h;
+    header *header;
 
-  HANDLE db_hFile;
+    HANDLE db_hFile;
 
 #ifdef NSIS_CONFIG_CRC_SUPPORT
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
-  verify_time = GetTickCount() + 1000;
+    verify_time = GetTickCount() + 1000;
 #endif
 #endif//NSIS_CONFIG_CRC_SUPPORT
 
-  GetModuleFileName(NULL, state_exe_path, NSIS_MAX_STRLEN);
+    GetModuleFileName(NULL, state_exe_path, NSIS_MAX_STRLEN);
 
-  g_db_hFile = db_hFile = myOpenFile(state_exe_path, GENERIC_READ, OPEN_EXISTING);
-  if (db_hFile == INVALID_HANDLE_VALUE)
-  {
-    return _LANG_CANTOPENSELF;
-  }
-
-  mystrcpy(state_exe_directory, state_exe_path);
-  mystrcpy(state_exe_file, trimslashtoend(state_exe_directory));
-
-  left = m_length = GetFileSize(db_hFile,NULL);
-  while (left > 0)
-  {
-    static char temp[32768];
-    DWORD l = min(left, (g_filehdrsize ? 32768 : 512));
-    if (!ReadSelfFile(temp, l))
+    g_db_hFile = db_hFile = myOpenFile(state_exe_path, GENERIC_READ, OPEN_EXISTING);
+    if (db_hFile == INVALID_HANDLE_VALUE)
     {
-#if defined(NSIS_CONFIG_CRC_SUPPORT) && defined(NSIS_CONFIG_VISIBLE_SUPPORT)
-      handle_ver_dlg(TRUE);
-#endif//NSIS_CONFIG_CRC_SUPPORT
-      return _LANG_INVALIDCRC;
+        return _LANG_CANTOPENSELF;
     }
 
-    if (!g_filehdrsize)
+    mystrcpy(state_exe_directory, state_exe_path);
+    mystrcpy(state_exe_file, trimslashtoend(state_exe_directory));
+
+    left = m_length = GetFileSize(db_hFile, NULL);
+    while (left > 0)
     {
-      mini_memcpy(&h, temp, sizeof(firstheader));
-      if (
-           (h.flags & (~FH_FLAGS_MASK)) == 0 &&
-           h.siginfo == FH_SIG &&
-           h.nsinst[2] == FH_INT3 &&
-           h.nsinst[1] == FH_INT2 &&
-           h.nsinst[0] == FH_INT1
-         )
-      {
-        g_filehdrsize = m_pos;
-
-#if defined(NSIS_CONFIG_CRC_SUPPORT) || defined(NSIS_CONFIG_SILENT_SUPPORT)
-        cl_flags |= h.flags;
-#endif
-
-#ifdef NSIS_CONFIG_SILENT_SUPPORT
-        g_exec_flags.silent |= cl_flags & FH_FLAGS_SILENT;
-#endif
-
-        if (h.length_of_all_following_data > left)
-          return _LANG_INVALIDCRC;
-
-#ifdef NSIS_CONFIG_CRC_SUPPORT
-        if ((cl_flags & FH_FLAGS_FORCE_CRC) == 0)
+        static char temp[32768];
+        DWORD l = min(left, (g_filehdrsize ? 32768 : 512));
+        if (!ReadSelfFile(temp, l))
         {
-          if (cl_flags & FH_FLAGS_NO_CRC)
-            break;
+#if defined(NSIS_CONFIG_CRC_SUPPORT) && defined(NSIS_CONFIG_VISIBLE_SUPPORT)
+            handle_ver_dlg(TRUE);
+#endif//NSIS_CONFIG_CRC_SUPPORT
+            return _LANG_INVALIDCRC;
         }
 
-        do_crc++;
+        if (!g_filehdrsize)
+        {
+            mini_memcpy(&h, temp, sizeof(firstheader));
+            if (
+                (h.flags & (~FH_FLAGS_MASK)) == 0 &&
+                h.siginfo == FH_SIG &&
+                h.nsinst[2] == FH_INT3 &&
+                h.nsinst[1] == FH_INT2 &&
+                h.nsinst[0] == FH_INT1
+                )
+            {
+                g_filehdrsize = m_pos;
+
+#if defined(NSIS_CONFIG_CRC_SUPPORT) || defined(NSIS_CONFIG_SILENT_SUPPORT)
+                cl_flags |= h.flags;
+#endif
+
+#ifdef NSIS_CONFIG_SILENT_SUPPORT
+                g_exec_flags.silent |= cl_flags & FH_FLAGS_SILENT;
+#endif
+
+                if (h.length_of_all_following_data > left)
+                    return _LANG_INVALIDCRC;
+
+#ifdef NSIS_CONFIG_CRC_SUPPORT
+                if ((cl_flags & FH_FLAGS_FORCE_CRC) == 0)
+                {
+                    if (cl_flags & FH_FLAGS_NO_CRC)
+                        break;
+                }
+
+                do_crc++;
 
 #ifndef NSIS_CONFIG_CRC_ANAL
-        left = h.length_of_all_following_data - 4;
-        // end crc checking at crc :) this means you can tack stuff on the end and it'll still work.
+                left = h.length_of_all_following_data - 4;
+                // end crc checking at crc :) this means you can tack stuff on the end and it'll still work.
 #else //!NSIS_CONFIG_CRC_ANAL
-        left -= 4;
+                left -= 4;
 #endif//NSIS_CONFIG_CRC_ANAL
-        // this is in case the end part is < 512 bytes.
-        if (l > (DWORD)left) l=(DWORD)left;
+                // this is in case the end part is < 512 bytes.
+                if (l > (DWORD)left) l = (DWORD)left;
 
 #else//!NSIS_CONFIG_CRC_SUPPORT
-        // no crc support, no need to keep on reading
-        break;
+                // no crc support, no need to keep on reading
+                break;
 #endif//!NSIS_CONFIG_CRC_SUPPORT
-      }
-    }
+            }
+        }
 #ifdef NSIS_CONFIG_CRC_SUPPORT
 
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
 
 #ifdef NSIS_CONFIG_SILENT_SUPPORT
-    else if ((cl_flags & FH_FLAGS_SILENT) == 0)
+        else if ((cl_flags & FH_FLAGS_SILENT) == 0)
 #endif//NSIS_CONFIG_SILENT_SUPPORT
-    {
-      handle_ver_dlg(FALSE); 
-    }
+        {
+            handle_ver_dlg(FALSE);
+        }
 #endif//NSIS_CONFIG_VISIBLE_SUPPORT
 
 #ifndef NSIS_CONFIG_CRC_ANAL
-    if (left < m_length)
+        if (left < m_length)
 #endif//NSIS_CONFIG_CRC_ANAL
-      crc = CRC32(crc, temp, l);
+            crc = CRC32(crc, temp, l);
 
 #endif//NSIS_CONFIG_CRC_SUPPORT
-    m_pos += l;
-    left -= l;
-  }
+        m_pos += l;
+        left -= l;
+    }
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
 #ifdef NSIS_CONFIG_CRC_SUPPORT
-  handle_ver_dlg(TRUE);
+    handle_ver_dlg(TRUE);
 #endif//NSIS_CONFIG_CRC_SUPPORT
 #endif//NSIS_CONFIG_VISIBLE_SUPPORT
-  if (!g_filehdrsize)
-    return _LANG_INVALIDCRC;
+    if (!g_filehdrsize)
+        return _LANG_INVALIDCRC;
 
 #ifdef NSIS_CONFIG_CRC_SUPPORT
-  if (do_crc)
-  {
-    crc32_t fcrc;
-    SetSelfFilePointer(m_pos);
-    if (!ReadSelfFile(&fcrc, sizeof(crc32_t)) || crc != fcrc)
-      return _LANG_INVALIDCRC;
-  }
+    if (do_crc)
+    {
+        crc32_t fcrc;
+        SetSelfFilePointer(m_pos);
+        if (!ReadSelfFile(&fcrc, sizeof(crc32_t)) || crc != fcrc)
+            return _LANG_INVALIDCRC;
+    }
 #endif//NSIS_CONFIG_CRC_SUPPORT
 
-  data = (void *)GlobalAlloc(GPTR,h.length_of_header);
+    data = (void *)GlobalAlloc(GPTR, h.length_of_header);
 
 #ifdef NSIS_COMPRESS_WHOLE
-  inflateReset(&g_inflate_stream);
+    inflateReset(&g_inflate_stream);
 
-  {
-    TCHAR fno[MAX_PATH];
-    my_GetTempFileName(fno, state_temp_dir);
-    dbd_hFile=CreateFile(fno,GENERIC_WRITE|GENERIC_READ,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_TEMPORARY|FILE_FLAG_DELETE_ON_CLOSE,NULL);
-    if (dbd_hFile == INVALID_HANDLE_VALUE)
-      return _LANG_ERRORWRITINGTEMP;
-  }
-  dbd_srcpos = SetSelfFilePointer(g_filehdrsize + sizeof(firstheader));
+    {
+        TCHAR fno[MAX_PATH];
+        my_GetTempFileName(fno, state_temp_dir);
+        dbd_hFile = CreateFile(fno, GENERIC_WRITE | GENERIC_READ, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_TEMPORARY | FILE_FLAG_DELETE_ON_CLOSE, NULL);
+        if (dbd_hFile == INVALID_HANDLE_VALUE)
+            return _LANG_ERRORWRITINGTEMP;
+    }
+    dbd_srcpos = SetSelfFilePointer(g_filehdrsize + sizeof(firstheader));
 #ifdef NSIS_CONFIG_CRC_SUPPORT
-  dbd_fulllen = dbd_srcpos - sizeof(h) + h.length_of_all_following_data - ((h.flags & FH_FLAGS_NO_CRC) ? 0 : sizeof(crc32_t));
+    dbd_fulllen = dbd_srcpos - sizeof(h) + h.length_of_all_following_data - ((h.flags & FH_FLAGS_NO_CRC) ? 0 : sizeof(crc32_t));
 #else
-  dbd_fulllen = dbd_srcpos - sizeof(h) + h.length_of_all_following_data;
+    dbd_fulllen = dbd_srcpos - sizeof(h) + h.length_of_all_following_data;
 #endif//NSIS_CONFIG_CRC_SUPPORT
 #else
-  SetSelfFilePointer(g_filehdrsize + sizeof(firstheader));
+    SetSelfFilePointer(g_filehdrsize + sizeof(firstheader));
 #endif//NSIS_COMPRESS_WHOLE
 
-  if (GetCompressedDataFromDataBlockToMemory(-1, data, h.length_of_header) != h.length_of_header)
-  {
-    return _LANG_INVALIDCRC;
-  }
+    if (GetCompressedDataFromDataBlockToMemory(-1, data, h.length_of_header) != h.length_of_header)
+    {
+        return _LANG_INVALIDCRC;
+    }
 
-  header = g_header = data;
+    header = g_header = data;
 
-  g_flags = header->flags;
+    g_flags = header->flags;
 
 #ifdef NSIS_CONFIG_UNINSTALL_SUPPORT
-  if (h.flags & FH_FLAGS_UNINSTALL)
-    g_is_uninstaller++;
+    if (h.flags & FH_FLAGS_UNINSTALL)
+        g_is_uninstaller++;
 #endif
 
-  // set offsets to real memory offsets rather than installer's header offset
-  left = BLOCKS_NUM;
-  while (left--)
-    header->blocks[left].offset += (int)data;
+    // set offsets to real memory offsets rather than installer's header offset
+    left = BLOCKS_NUM;
+    while (left--)
+        header->blocks[left].offset += (int)data;
 
 #ifdef NSIS_COMPRESS_WHOLE
-  header->blocks[NB_DATA].offset = dbd_pos;
+    header->blocks[NB_DATA].offset = dbd_pos;
 #else
-  header->blocks[NB_DATA].offset = SetFilePointer(db_hFile,0,NULL,FILE_CURRENT);
+    header->blocks[NB_DATA].offset = SetFilePointer(db_hFile, 0, NULL, FILE_CURRENT);
 #endif
 
-  mini_memcpy(&g_blocks, &header->blocks, sizeof(g_blocks));
+    mini_memcpy(&g_blocks, &header->blocks, sizeof(g_blocks));
 
-  return 0;
+    return 0;
 }
 
 #define IBUFSIZE 16384
@@ -352,107 +352,107 @@ const TCHAR * NSISCALL loadHeaders(int cl_flags)
 // Decompress data.
 int NSISCALL _dodecomp(int offset, HANDLE hFileOut, char *outbuf, int outbuflen)
 {
-  static char inbuffer[IBUFSIZE+OBUFSIZE];
-  char *outbuffer;
-  int outbuffer_len=outbuf?outbuflen:OBUFSIZE;
-  int retval=0;
-  int input_len;
+    static char inbuffer[IBUFSIZE + OBUFSIZE];
+    char *outbuffer;
+    int outbuffer_len = outbuf ? outbuflen : OBUFSIZE;
+    int retval = 0;
+    int input_len;
 
-  outbuffer = outbuf?outbuf:(inbuffer+IBUFSIZE);
+    outbuffer = outbuf ? outbuf : (inbuffer + IBUFSIZE);
 
-  if (offset>=0)
-  {
-    SetSelfFilePointer(g_blocks[NB_DATA].offset+offset);
-  }
+    if (offset >= 0)
+    {
+        SetSelfFilePointer(g_blocks[NB_DATA].offset + offset);
+    }
 
-  if (!ReadSelfFile((LPVOID)&input_len,sizeof(int))) return -3;
+    if (!ReadSelfFile((LPVOID)&input_len, sizeof(int))) return -3;
 
 #ifdef NSIS_CONFIG_COMPRESSION_SUPPORT
-  if (input_len & 0x80000000) // compressed
-  {
-    TCHAR progress[64];
-    int input_len_total;
-    DWORD ltc = GetTickCount(), tc;
-
-    inflateReset(&g_inflate_stream);
-    input_len_total = input_len &= 0x7fffffff; // take off top bit.
-
-    while (input_len > 0)
+    if (input_len & 0x80000000) // compressed
     {
-      int l=min(input_len,IBUFSIZE);
-      int err;
+        TCHAR progress[64];
+        int input_len_total;
+        DWORD ltc = GetTickCount(), tc;
 
-      if (!ReadSelfFile((LPVOID)inbuffer,l))
-        return -3;
+        inflateReset(&g_inflate_stream);
+        input_len_total = input_len &= 0x7fffffff; // take off top bit.
 
-      g_inflate_stream.next_in = inbuffer;
-      g_inflate_stream.avail_in = l;
-      input_len-=l;
-
-      for (;;)
-      {
-        int u;
-
-        g_inflate_stream.next_out = outbuffer;
-        g_inflate_stream.avail_out = (unsigned int)outbuffer_len;
-
-        err=inflate(&g_inflate_stream);
-
-        if (err<0) return -4;
-
-        u=(char*)g_inflate_stream.next_out - outbuffer;
-
-        tc = GetTickCount();
-        if (g_exec_flags.status_update & 1 && (tc - ltc > 200 || !input_len))
+        while (input_len > 0)
         {
-          wsprintf(progress, _T("... %d%%"), MulDiv(input_len_total - input_len, 100, input_len_total));
-          update_status_text(0, progress);
-          ltc = tc;
+            int l = min(input_len, IBUFSIZE);
+            int err;
+
+            if (!ReadSelfFile((LPVOID)inbuffer, l))
+                return -3;
+
+            g_inflate_stream.next_in = inbuffer;
+            g_inflate_stream.avail_in = l;
+            input_len -= l;
+
+            for (;;)
+            {
+                int u;
+
+                g_inflate_stream.next_out = outbuffer;
+                g_inflate_stream.avail_out = (unsigned int)outbuffer_len;
+
+                err = inflate(&g_inflate_stream);
+
+                if (err < 0) return -4;
+
+                u = (char*)g_inflate_stream.next_out - outbuffer;
+
+                tc = GetTickCount();
+                if (g_exec_flags.status_update & 1 && (tc - ltc > 200 || !input_len))
+                {
+                    wsprintf(progress, _T("... %d%%"), MulDiv(input_len_total - input_len, 100, input_len_total));
+                    update_status_text(0, progress);
+                    ltc = tc;
+                }
+
+                // if there's no output, more input is needed
+                if (!u)
+                    break;
+
+                if (!outbuf)
+                {
+                    DWORD r;
+                    if (!WriteFile(hFileOut, outbuffer, u, &r, NULL) || (int)r != u) return -2;
+                    retval += u;
+                }
+                else
+                {
+                    retval += u;
+                    outbuffer_len -= u;
+                    outbuffer = g_inflate_stream.next_out;
+                }
+                if (err == Z_STREAM_END) return retval;
+            }
         }
-
-        // if there's no output, more input is needed
-        if (!u)
-          break;
-
+    }
+    else
+#endif//NSIS_CONFIG_COMPRESSION_SUPPORT
+    {
         if (!outbuf)
         {
-          DWORD r;
-          if (!WriteFile(hFileOut,outbuffer,u,&r,NULL) || (int)r != u) return -2;
-          retval+=u;
+            while (input_len > 0)
+            {
+                DWORD l = min(input_len, outbuffer_len);
+                DWORD t;
+                if (!ReadSelfFile((LPVOID)inbuffer, l)) return -3;
+                if (!WriteFile(hFileOut, inbuffer, l, &t, NULL) || l != t) return -2;
+                retval += l;
+                input_len -= l;
+            }
         }
         else
         {
-          retval+=u;
-          outbuffer_len-=u;
-          outbuffer=g_inflate_stream.next_out;
+            int l = min(input_len, outbuflen);
+            if (!ReadSelfFile((LPVOID)outbuf, l)) return -3;
+            retval = l;
         }
-        if (err==Z_STREAM_END) return retval;
-      }
     }
-  }
-  else
-#endif//NSIS_CONFIG_COMPRESSION_SUPPORT
-  {
-    if (!outbuf)
-    {
-      while (input_len > 0)
-      {
-        DWORD l=min(input_len,outbuffer_len);
-        DWORD t;
-        if (!ReadSelfFile((LPVOID)inbuffer,l)) return -3;
-        if (!WriteFile(hFileOut,inbuffer,l,&t,NULL) || l!=t) return -2;
-        retval+=l;
-        input_len-=l;
-      }
-    }
-    else
-    {
-      int l=min(input_len,outbuflen);
-      if (!ReadSelfFile((LPVOID)outbuf,l)) return -3;
-      retval=l;
-    }
-  }
-  return retval;
+    return retval;
 }
 #else//NSIS_COMPRESS_WHOLE
 
@@ -464,118 +464,117 @@ extern BOOL CALLBACK verProc(HWND, UINT, WPARAM, LPARAM);
 extern BOOL CALLBACK DialogProc(HWND, UINT, WPARAM, LPARAM);
 static int NSISCALL __ensuredata(int amount)
 {
-  int needed=amount-(dbd_size-dbd_pos);
+    int needed = amount - (dbd_size - dbd_pos);
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
-  verify_time=GetTickCount()+500;
+    verify_time = GetTickCount() + 500;
 #endif
-  if (needed>0)
-  {
-    SetSelfFilePointer(dbd_srcpos);
-    SetFilePointer(dbd_hFile,dbd_size,NULL,FILE_BEGIN);
-    m_length=needed;
-    m_pos=0;
-    for (;;)
+    if (needed > 0)
     {
-      int err;
-      int l=min(IBUFSIZE,dbd_fulllen-dbd_srcpos);
-      if (!ReadSelfFile((LPVOID)_inbuffer,l)) return -1;
-      dbd_srcpos+=l;
-      g_inflate_stream.next_in=_inbuffer;
-      g_inflate_stream.avail_in=l;
-      do
-      {
-        DWORD r,t;
+        SetSelfFilePointer(dbd_srcpos);
+        SetFilePointer(dbd_hFile, dbd_size, NULL, FILE_BEGIN);
+        m_length = needed;
+        m_pos = 0;
+        for (;;)
+        {
+            int err;
+            int l = min(IBUFSIZE, dbd_fulllen - dbd_srcpos);
+            if (!ReadSelfFile((LPVOID)_inbuffer, l)) return -1;
+            dbd_srcpos += l;
+            g_inflate_stream.next_in = _inbuffer;
+            g_inflate_stream.avail_in = l;
+            do
+            {
+                DWORD r, t;
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
-        if (g_header)
+                if (g_header)
 #ifdef NSIS_CONFIG_SILENT_SUPPORT
-          if (!g_exec_flags.silent)
+                    if (!g_exec_flags.silent)
 #endif
-          {
-            m_pos=m_length-(amount-(dbd_size-dbd_pos));
+                    {
+                    m_pos = m_length - (amount - (dbd_size - dbd_pos));
 
-            handle_ver_dlg(FALSE);
-          }
+                    handle_ver_dlg(FALSE);
+                    }
 #endif//NSIS_CONFIG_VISIBLE_SUPPORT
-        g_inflate_stream.next_out=_outbuffer;
-        g_inflate_stream.avail_out=OBUFSIZE;
-        err=inflate(&g_inflate_stream);
-        if (err<0)
-        {
-          return -3;
+                g_inflate_stream.next_out = _outbuffer;
+                g_inflate_stream.avail_out = OBUFSIZE;
+                err = inflate(&g_inflate_stream);
+                if (err < 0)
+                {
+                    return -3;
+                }
+                r = (DWORD)g_inflate_stream.next_out - (DWORD)_outbuffer;
+                if (r)
+                {
+                    if (!WriteFile(dbd_hFile, _outbuffer, r, &t, NULL) || r != t)
+                    {
+                        return -2;
+                    }
+                    dbd_size += r;
+                }
+                else if (g_inflate_stream.avail_in || !l) return -3;
+                else break;
+            } while (g_inflate_stream.avail_in);
+            if (amount - (dbd_size - dbd_pos) <= 0) break;
         }
-        r=(DWORD)g_inflate_stream.next_out-(DWORD)_outbuffer;
-        if (r)
-        {
-          if (!WriteFile(dbd_hFile,_outbuffer,r,&t,NULL) || r != t)
-          {
-            return -2;
-          }
-          dbd_size+=r;
-        }
-        else if (g_inflate_stream.avail_in || !l) return -3;
-        else break;
-      }
-      while (g_inflate_stream.avail_in);
-      if (amount-(dbd_size-dbd_pos) <= 0) break;
+        SetFilePointer(dbd_hFile, dbd_pos, NULL, FILE_BEGIN);
     }
-    SetFilePointer(dbd_hFile,dbd_pos,NULL,FILE_BEGIN);
-  }
 #ifdef NSIS_CONFIG_VISIBLE_SUPPORT
-  handle_ver_dlg(TRUE); 
+    handle_ver_dlg(TRUE);
 #endif//NSIS_CONFIG_VISIBLE_SUPPORT
-  return 0;
+    return 0;
 }
 
 
 int NSISCALL _dodecomp(int offset, HANDLE hFileOut, char *outbuf, int outbuflen)
 {
-  DWORD r;
-  int input_len;
-  int retval;
-  if (offset>=0)
-  {
-    dbd_pos=g_blocks[NB_DATA].offset+offset;
-    SetFilePointer(dbd_hFile,dbd_pos,NULL,FILE_BEGIN);
-  }
-  retval=__ensuredata(sizeof(int));
-  if (retval<0) return retval;
-
-  if (!ReadFile(dbd_hFile,(LPVOID)&input_len,sizeof(int),&r,NULL) || r!=sizeof(int)) return -3;
-  dbd_pos+=sizeof(int);
-
-  retval=__ensuredata(input_len);
-  if (retval < 0) return retval;
-
-  if (!outbuf)
-  {
-    while (input_len > 0)
+    DWORD r;
+    int input_len;
+    int retval;
+    if (offset >= 0)
     {
-      DWORD t;
-      DWORD l=min(input_len,IBUFSIZE);
-      if (!ReadFile(dbd_hFile,(LPVOID)_inbuffer,l,&r,NULL) || l != r) return -3;
-      if (!WriteFile(hFileOut,_inbuffer,r,&t,NULL) || t != l) return -2;
-      retval+=r;
-      input_len-=r;
-      dbd_pos+=r;
+        dbd_pos = g_blocks[NB_DATA].offset + offset;
+        SetFilePointer(dbd_hFile, dbd_pos, NULL, FILE_BEGIN);
     }
-  }
-  else
-  {
-    if (!ReadFile(dbd_hFile,(LPVOID)outbuf,min(input_len,outbuflen),&r,NULL)) return -3;
-    retval=r;
-    dbd_pos+=r;
-  }
-  return retval;
+    retval = __ensuredata(sizeof(int));
+    if (retval < 0) return retval;
+
+    if (!ReadFile(dbd_hFile, (LPVOID)&input_len, sizeof(int), &r, NULL) || r != sizeof(int)) return -3;
+    dbd_pos += sizeof(int);
+
+    retval = __ensuredata(input_len);
+    if (retval < 0) return retval;
+
+    if (!outbuf)
+    {
+        while (input_len > 0)
+        {
+            DWORD t;
+            DWORD l = min(input_len, IBUFSIZE);
+            if (!ReadFile(dbd_hFile, (LPVOID)_inbuffer, l, &r, NULL) || l != r) return -3;
+            if (!WriteFile(hFileOut, _inbuffer, r, &t, NULL) || t != l) return -2;
+            retval += r;
+            input_len -= r;
+            dbd_pos += r;
+        }
+    }
+    else
+    {
+        if (!ReadFile(dbd_hFile, (LPVOID)outbuf, min(input_len, outbuflen), &r, NULL)) return -3;
+        retval = r;
+        dbd_pos += r;
+    }
+    return retval;
 }
 #endif//NSIS_COMPRESS_WHOLE
 
 BOOL NSISCALL ReadSelfFile(LPVOID lpBuffer, DWORD nNumberOfBytesToRead)
 {
-  DWORD rd;
-  return ReadFile(g_db_hFile,lpBuffer,nNumberOfBytesToRead,&rd,NULL) && (rd == nNumberOfBytesToRead);
+    DWORD rd;
+    return ReadFile(g_db_hFile, lpBuffer, nNumberOfBytesToRead, &rd, NULL) && (rd == nNumberOfBytesToRead);
 }
 
 DWORD NSISCALL SetSelfFilePointer(LONG lDistanceToMove)
 {
-  return SetFilePointer(g_db_hFile,lDistanceToMove,NULL,FILE_BEGIN);
+    return SetFilePointer(g_db_hFile, lDistanceToMove, NULL, FILE_BEGIN);
 }
