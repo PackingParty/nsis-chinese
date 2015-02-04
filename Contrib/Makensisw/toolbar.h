@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (c) 2003 Sunil Kamath
   Modified by Joost Verburg
 
@@ -11,15 +11,15 @@
   freely, subject to the following restrictions:
 
   1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
+  claim that you wrote the original software. If you use this software
+  in a product, an acknowledgment in the product documentation would be
+  appreciated but is not required.
   2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
+  misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
   Reviewed for Unicode support by Jim Park -- 08/20/2007
-*/
+  */
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
 #include <commctrl.h>
@@ -65,12 +65,12 @@
 #define IDB_COMPRESSOR_LZMA              15
 
 typedef struct ToolBarStruct {
-  HWND hwnd;
-  HMENU dropdownmenu;
-  POINT dropdownpoint;
-  HIMAGELIST imagelist;
-  HIMAGELIST imagelistd;
-  HIMAGELIST imagelisth;
+    HWND hwnd;
+    HMENU dropdownmenu;
+    POINT dropdownpoint;
+    HIMAGELIST imagelist;
+    HIMAGELIST imagelistd;
+    HIMAGELIST imagelisth;
 } NTOOLBAR;
 
 void CreateToolBar();

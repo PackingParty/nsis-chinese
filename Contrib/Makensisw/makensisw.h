@@ -1,4 +1,4 @@
-/*
+ï»¿/*
   Copyright (c) 2002 Robert Rainwater
   Contributors: Justin Frankel, Fritz Elfert, Amir Szekely, Sunil Kamath, Joost Verburg
 
@@ -11,15 +11,15 @@
   freely, subject to the following restrictions:
 
   1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
+  claim that you wrote the original software. If you use this software
+  in a product, an acknowledgment in the product documentation would be
+  appreciated but is not required.
   2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
+  misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
   Unicode support by Jim Park -- 08/10/2007
-*/
+  */
 #ifndef MAKENSIS_H
 #define MAKENSIS_H
 
@@ -37,16 +37,16 @@
 #define NSIS_FOR     "http://forums.winamp.com/forumdisplay.php?forumid=65"
 #define NSIS_UPDATE  "http://nsis.sourceforge.net/update.php?version="
 #define NSIS_DL_URL  "http://nsis.sourceforge.net/download/"
-#define USAGE        _T("ÓÃ·¨£º\r\n\r\n - ÎÄ¼ş | ÔØÈë½Å±¾...\r\n - °Ñ.nsiÎÄ¼şÍÏµ½´Ë´°¿Ú\r\n - ÔÚ.nsiÎÄ¼şÉÏÓÒ»÷È»ºóÑ¡Ôñ¡°±àÒëNSIS½Å±¾¡±")
-#define COPYRIGHT    _T("Copyright © 2002 Robert Rainwater")
+#define USAGE        _T("ç”¨æ³•ï¼š\r\n\r\n - æ–‡ä»¶ | è½½å…¥è„šæœ¬...\r\n - æŠŠ.nsiæ–‡ä»¶æ‹–åˆ°æ­¤çª—å£\r\n - åœ¨.nsiæ–‡ä»¶ä¸Šå³å‡»ç„¶åé€‰æ‹©â€œç¼–è¯‘NSISè„šæœ¬â€")
+#define COPYRIGHT    _T("Copyright ?2002 Robert Rainwater")
 #define CONTRIB      _T("Fritz Elfert, Justin Frankel, Amir Szekely, Sunil Kamath, Joost Verburg, (Unicode) Jim Park")
 #define DOCPATH      "http://nsis.sourceforge.net/Docs/"
 #define LOCALDOCS    _T("\\NSIS.chm")
-#define NSISERROR    _T("ÎŞ·¨³õÊ¼»¯MakeNSIS£¬Çë²é¿´makensis.exeÊÇ·ñºÍmakensisw.exeÔÚÍ¬Ò»Ä¿Â¼ÖĞ¡£")
-#define DLGERROR     _T("ÎŞ·¨³õÊ¼»¯MakeNSISW¡£")
-#define SYMBOLSERROR _T("·ûºÅ²»ÄÜº¬ÓĞ¿Õ°××Ö·û")
-#define MULTIDROPERROR _T("ÍÏÈë¶à¸ö½Å±¾Ä¿Ç°»¹²»Ö§³Ö")
-#define NSISUPDATEPROMPT _T("ÔËĞĞNSIS¸üĞÂ½«»á¹Ø±ÕMakeNSISW\nÊÇ·ñ¼ÌĞø£¿")
+#define NSISERROR    _T("æ— æ³•åˆå§‹åŒ–MakeNSISï¼Œè¯·æŸ¥çœ‹makensis.exeæ˜¯å¦å’Œmakensisw.exeåœ¨åŒä¸€ç›®å½•ä¸­ã€‚")
+#define DLGERROR     _T("æ— æ³•åˆå§‹åŒ–MakeNSISWã€‚")
+#define SYMBOLSERROR _T("ç¬¦å·ä¸èƒ½å«æœ‰ç©ºç™½å­—ç¬¦")
+#define MULTIDROPERROR _T("æ‹–å…¥å¤šä¸ªè„šæœ¬ç›®å‰è¿˜ä¸æ”¯æŒ")
+#define NSISUPDATEPROMPT _T("è¿è¡ŒNSISæ›´æ–°å°†ä¼šå…³é—­MakeNSISW\næ˜¯å¦ç»§ç»­ï¼Ÿ")
 #define REGSEC       HKEY_CURRENT_USER
 #define REGSECDEF    HKEY_LOCAL_MACHINE
 #define REGKEY       _T("Software\\NSIS")
@@ -60,85 +60,85 @@
 #define TIMEOUT      100
 #define MINWIDTH     350
 #define MINHEIGHT    180
-#define COMPRESSOR_MESSAGE _T("\n\n%sÑ¹ËõÆ÷´´½¨ÁË×îĞ¡°²×°°ü£¨%d×Ö½Ú£©¡£")
-#define RESTORED_COMPRESSOR_MESSAGE _T("\n\n\%sÑ¹ËõÆ÷´´½¨ÁË×îĞ¡°²×°°ü£¨%d×Ö½Ú£©¡£")
-#define EXE_HEADER_COMPRESSOR_STAT _T("EXEÍ·²¿´óĞ¡:")
-#define TOTAL_SIZE_COMPRESSOR_STAT _T("È«²¿´óĞ¡:")
+#define COMPRESSOR_MESSAGE _T("\n\n%så‹ç¼©å™¨åˆ›å»ºäº†æœ€å°å®‰è£…åŒ…ï¼ˆ%då­—èŠ‚ï¼‰ã€‚")
+#define RESTORED_COMPRESSOR_MESSAGE _T("\n\n%så‹ç¼©å™¨åˆ›å»ºäº†æœ€å°å®‰è£…åŒ…ï¼ˆ%då­—èŠ‚ï¼‰ã€‚")
+#define EXE_HEADER_COMPRESSOR_STAT _T("EXEå¤´éƒ¨å¤§å°:")
+#define TOTAL_SIZE_COMPRESSOR_STAT _T("å…¨éƒ¨å¤§å°:")
 #define SYMBOL_SET_NAME_MAXLEN 40
-#define LOAD_SYMBOL_SET_DLG_NAME _T("ÔØÈë·ûºÅ¶¨ÒåÉèÖÃ")
-#define SAVE_SYMBOL_SET_DLG_NAME _T("±£´æ·ûºÅ¶¨ÒåÉèÖÃ")
-#define LOAD_BUTTON_TEXT _T("ÔØÈë")
-#define SAVE_BUTTON_TEXT _T("±£´æ")
-#define LOAD_SYMBOL_SET_MESSAGE _T("ÇëÑ¡ÔñÒªÔØÈëµÄ·ûºÅ¶¨ÒåÉèÖÃÃû³Æ¡£")
-#define SAVE_SYMBOL_SET_MESSAGE _T("Çë¼üÈë»òÑ¡ÔñÒª±£´æµÄ·ûºÅ¶¨ÒåÉèÖÃÃû³Æ¡£")
+#define LOAD_SYMBOL_SET_DLG_NAME _T("è½½å…¥ç¬¦å·å®šä¹‰è®¾ç½®")
+#define SAVE_SYMBOL_SET_DLG_NAME _T("ä¿å­˜ç¬¦å·å®šä¹‰è®¾ç½®")
+#define LOAD_BUTTON_TEXT _T("è½½å…¥")
+#define SAVE_BUTTON_TEXT _T("ä¿å­˜")
+#define LOAD_SYMBOL_SET_MESSAGE _T("è¯·é€‰æ‹©è¦è½½å…¥çš„ç¬¦å·å®šä¹‰è®¾ç½®åç§°ã€‚")
+#define SAVE_SYMBOL_SET_MESSAGE _T("è¯·é”®å…¥æˆ–é€‰æ‹©è¦ä¿å­˜çš„ç¬¦å·å®šä¹‰è®¾ç½®åç§°ã€‚")
 
 #define WM_MAKENSIS_PROCESSCOMPLETE (WM_USER+1001)
 #define WM_MAKENSIS_LOADSYMBOLSET (WM_USER+1002)
 #define WM_MAKENSIS_SAVESYMBOLSET (WM_USER+1003)
 
 enum {
-  MAKENSIS_NOTIFY_SCRIPT,
-  MAKENSIS_NOTIFY_WARNING,
-  MAKENSIS_NOTIFY_ERROR,
-  MAKENSIS_NOTIFY_OUTPUT
+    MAKENSIS_NOTIFY_SCRIPT,
+    MAKENSIS_NOTIFY_WARNING,
+    MAKENSIS_NOTIFY_ERROR,
+    MAKENSIS_NOTIFY_OUTPUT
 };
 
 typedef enum {
-  COMPRESSOR_NONE_SELECTED = -1,
-  COMPRESSOR_SCRIPT = 0,
-  COMPRESSOR_ZLIB,
-  COMPRESSOR_ZLIB_SOLID,
-  COMPRESSOR_BZIP2,
-  COMPRESSOR_BZIP2_SOLID,
-  COMPRESSOR_LZMA,
-  COMPRESSOR_LZMA_SOLID,
-  COMPRESSOR_BEST,
+    COMPRESSOR_NONE_SELECTED = -1,
+    COMPRESSOR_SCRIPT = 0,
+    COMPRESSOR_ZLIB,
+    COMPRESSOR_ZLIB_SOLID,
+    COMPRESSOR_BZIP2,
+    COMPRESSOR_BZIP2_SOLID,
+    COMPRESSOR_LZMA,
+    COMPRESSOR_LZMA_SOLID,
+    COMPRESSOR_BEST,
 } NCOMPRESSOR;
 
 #ifdef MAKENSISW_CPP
-TCHAR *compressor_names[] = {_T(""),
-                            _T("zlib"),
-                            _T("/SOLID zlib"),
-                            _T("bzip2"),
-                            _T("/SOLID bzip2"),
-                            _T("lzma"),
-                            _T("/SOLID lzma"),
-                            _T("Best")};
-TCHAR *compressor_display_names[] = {_T("½Å±¾¶¨Òå/±àÒëÆ÷Ä¬ÈÏ"),
-                            _T("ZLIB"),
-                            _T("ZLIB (¹ÌÊµ)"),
-                            _T("BZIP2"),
-                            _T("BZIP2 (¹ÌÊµ)"),
-                            _T("LZMA"),
-                            _T("LZMA (¹ÌÊµ)"),
-                            _T("×î¼ÑÑ¹ËõÆ÷")};
-WORD compressor_commands[] = {IDM_COMPRESSOR_SCRIPT,
-                              IDM_ZLIB,
-                              IDM_ZLIB_SOLID,
-                              IDM_BZIP2,
-                              IDM_BZIP2_SOLID,
-                              IDM_LZMA,
-                              IDM_LZMA_SOLID,
-                              IDM_BEST};
+TCHAR *compressor_names[] = { _T(""),
+_T("zlib"),
+_T("/SOLID zlib"),
+_T("bzip2"),
+_T("/SOLID bzip2"),
+_T("lzma"),
+_T("/SOLID lzma"),
+_T("Best") };
+TCHAR *compressor_display_names[] = { _T("è„šæœ¬å®šä¹‰/ç¼–è¯‘å™¨é»˜è®¤"),
+_T("ZLIB"),
+_T("ZLIB (å›ºå®)"),
+_T("BZIP2"),
+_T("BZIP2 (å›ºå®)"),
+_T("LZMA"),
+_T("LZMA (å›ºå®)"),
+_T("æœ€ä½³å‹ç¼©å™¨") };
+WORD compressor_commands[] = { IDM_COMPRESSOR_SCRIPT,
+IDM_ZLIB,
+IDM_ZLIB_SOLID,
+IDM_BZIP2,
+IDM_BZIP2_SOLID,
+IDM_LZMA,
+IDM_LZMA_SOLID,
+IDM_BEST };
 #endif
 
 #ifdef TOOLBAR_CPP
-int compressor_bitmaps[] = {IDB_COMPRESSOR_SCRIPT,
-                            IDB_COMPRESSOR_ZLIB,
-                            IDB_COMPRESSOR_ZLIB,
-                            IDB_COMPRESSOR_BZIP2,
-                            IDB_COMPRESSOR_BZIP2,
-                            IDB_COMPRESSOR_LZMA,
-                            IDB_COMPRESSOR_LZMA,
-                            IDB_COMPRESSOR_BEST};
-int compressor_strings[] = {IDS_SCRIPT,
-                            IDS_ZLIB,
-                            IDS_ZLIB_SOLID,
-                            IDS_BZIP2,
-                            IDS_BZIP2_SOLID,
-                            IDS_LZMA,
-                            IDS_LZMA_SOLID,
-                            IDS_BEST};
+int compressor_bitmaps[] = { IDB_COMPRESSOR_SCRIPT,
+IDB_COMPRESSOR_ZLIB,
+IDB_COMPRESSOR_ZLIB,
+IDB_COMPRESSOR_BZIP2,
+IDB_COMPRESSOR_BZIP2,
+IDB_COMPRESSOR_LZMA,
+IDB_COMPRESSOR_LZMA,
+IDB_COMPRESSOR_BEST };
+int compressor_strings[] = { IDS_SCRIPT,
+IDS_ZLIB,
+IDS_ZLIB_SOLID,
+IDS_BZIP2,
+IDS_BZIP2_SOLID,
+IDS_LZMA,
+IDS_LZMA_SOLID,
+IDS_BEST };
 #endif
 
 // Extern Variables
@@ -167,58 +167,58 @@ void           RestoreMRUList();
 void           SaveMRUList();
 
 typedef struct NSISScriptData {
-  TCHAR *script;
-  HGLOBAL script_cmd_args;
-  TCHAR *compile_command;
-  TCHAR *output_exe;
-  TCHAR *input_script;
-  TCHAR *branding;
-  TCHAR *brandingv;
-  TCHAR **symbols;
-  int retcode;
-  BOOL userSelectCompressor;
-  DWORD logLength;
-  DWORD warnings;
-  HINSTANCE hInstance;
-  HWND hwnd;
-  HMENU menu;
-  HMENU fileSubmenu;
-  HMENU editSubmenu;
-  HMENU toolsSubmenu;
-  HANDLE thread;
-  HANDLE sigint_event;
-  HWND focused_hwnd;
-  CHARRANGE textrange;
-  NCOMPRESSOR default_compressor;
-  NCOMPRESSOR compressor;
-  TCHAR *compressor_name;
-  TCHAR compressor_stats[512];
-  TCHAR *best_compressor_name;
-  // Added by Darren Owen (DrO) on 1/10/2003
-  int recompile_test;
-  // Added by Jim Park
-  bool isNSISUnicode;
+    TCHAR *script;
+    HGLOBAL script_cmd_args;
+    TCHAR *compile_command;
+    TCHAR *output_exe;
+    TCHAR *input_script;
+    TCHAR *branding;
+    TCHAR *brandingv;
+    TCHAR **symbols;
+    int retcode;
+    BOOL userSelectCompressor;
+    DWORD logLength;
+    DWORD warnings;
+    HINSTANCE hInstance;
+    HWND hwnd;
+    HMENU menu;
+    HMENU fileSubmenu;
+    HMENU editSubmenu;
+    HMENU toolsSubmenu;
+    HANDLE thread;
+    HANDLE sigint_event;
+    HWND focused_hwnd;
+    CHARRANGE textrange;
+    NCOMPRESSOR default_compressor;
+    NCOMPRESSOR compressor;
+    TCHAR *compressor_name;
+    TCHAR compressor_stats[512];
+    TCHAR *best_compressor_name;
+    // Added by Darren Owen (DrO) on 1/10/2003
+    int recompile_test;
+    // Added by Jim Park
+    bool isNSISUnicode;
 } NSCRIPTDATA;
 
 extern NSCRIPTDATA g_sdata;
 
 typedef struct ResizeData {
-  RECT resizeRect;
-  RECT griprect;
-  int dx;
-  int dy;
+    RECT resizeRect;
+    RECT griprect;
+    int dx;
+    int dy;
 } NRESIZEDATA;
 
 typedef struct FindReplaceDialog {
-  FINDREPLACE fr;
-  UINT uFindReplaceMsg;
-  HWND hwndFind;
+    FINDREPLACE fr;
+    UINT uFindReplaceMsg;
+    HWND hwndFind;
 } NFINDREPLACE;
 
 typedef struct ToolTipStruct {
-  HWND tip;
-  HWND tip_p;
-  HHOOK hook;
+    HWND tip;
+    HWND tip_p;
+    HHOOK hook;
 } NTOOLTIP;
 
 #endif
